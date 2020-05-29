@@ -10,9 +10,10 @@ interface OpenWeatherApi {
     @GET("weather")
     fun getWeather(@Query("appid") appid: String): Call<CurrentWeatherApiResponse>
 
-    @GET("payment_methods/card_issuers")
-    fun getWeatherByCoords(@Query("lat") lat: Long,
-                           @Query("lon") lon: Long,
+    @GET("weather")
+    fun getWeatherByCoords(@Query("lat") lat: Double,
+                           @Query("lon") lon: Double,
+                           @Query("lang") lang: String,
                            @Query("appid") appid: String): Call<CurrentWeatherApiResponse>
 
 }
