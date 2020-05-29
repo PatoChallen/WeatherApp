@@ -3,7 +3,7 @@ package com.patofernandez.weatherapp.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
-import com.patofernandez.weatherapp.model.SystemUnits
+import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
 import com.patofernandez.weatherapp.services.RetrofitService.createService
 import com.patofernandez.weatherapp.services.OpenWeatherApi
 import retrofit2.Call
@@ -17,10 +17,10 @@ class WeatherRepository {
         OpenWeatherApi::class.java
     )
 
-    fun getWeatherByCoords(lat: Double, lon: Double): MutableLiveData<CurrentWeatherApiResponse> {
+    fun getCurrentWeatherByCoords(lat: Double, lon: Double): MutableLiveData<CurrentWeatherApiResponse> {
         val currentWeatherApiResponseData = MutableLiveData<CurrentWeatherApiResponse>()
         val lang = Locale.getDefault().language
-        openWeatherApi.getWeatherByCoords(lat, lon, lang, KEY).enqueue(object : Callback<CurrentWeatherApiResponse>{
+        openWeatherApi.getCurrentWeatherByCoords(lat, lon, lang, KEY).enqueue(object : Callback<CurrentWeatherApiResponse>{
             override fun onResponse(call: Call<CurrentWeatherApiResponse>, response: Response<CurrentWeatherApiResponse>) {
                 currentWeatherApiResponseData.value = response.body()
             }
@@ -30,6 +30,21 @@ class WeatherRepository {
             }
         })
         return currentWeatherApiResponseData
+    }
+
+    fun getWeatherForecastByCoords(lat: Double, lon: Double): MutableLiveData<WeatherForecastApiResponse> {
+        val weatherForecastApiResponseData = MutableLiveData<WeatherForecastApiResponse>()
+        val lang = Locale.getDefault().language
+        openWeatherApi.getWeatherForecastByCoords(lat, lon, lang, KEY).enqueue(object : Callback<WeatherForecastApiResponse>{
+            override fun onResponse(call: Call<WeatherForecastApiResponse>, response: Response<WeatherForecastApiResponse>) {
+                weatherForecastApiResponseData.value = response.body()
+            }
+            override fun onFailure(call: Call<WeatherForecastApiResponse>, t: Throwable) {
+                Log.e(TAG, t.message)
+                weatherForecastApiResponseData.value = null
+            }
+        })
+        return weatherForecastApiResponseData
     }
 
     companion object {
