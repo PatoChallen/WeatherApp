@@ -1,6 +1,6 @@
 package com.patofernandez.weatherapp.model
 
-class OpenWeatherApiResponse {
+class CurrentWeatherApiResponse {
     var coord: Coordinates? = null
     var weather: Weather? = null
     var base: String = ""
