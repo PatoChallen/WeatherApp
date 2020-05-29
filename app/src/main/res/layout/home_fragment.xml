@@ -1,15 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toggle"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="190dp" />
+        android:id="@+id/city"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Buenos Aires, "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/country"
+        style="@style/customText"
+        android:layout_marginTop="16dp"
+        android:text="AR"
+        app:layout_constraintStart_toEndOf="@+id/city"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgWeather"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/temperature"
+        app:layout_constraintTop_toBottomOf="@+id/city" />
+
+    <TextView
+        android:id="@+id/temperature"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:text="18ªC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgWeather"
+        app:layout_constraintBottom_toBottomOf="@id/imgWeather"/>
+
+    <TextView
+        android:id="@+id/weather"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Few clouds"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgWeather" />
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="29/5/2020 2:03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weather" />
+
+    <TextView
+        android:id="@+id/visibility"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="visibilidad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time" />
+
+    <TextView
+        android:id="@+id/humidity"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="72%"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visibility" />
+
+    <TextView
+        android:id="@+id/pressure"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="1012 hpa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/humidity" />
+
+    <TextView
+        android:id="@+id/sunrise"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="09:50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pressure" />
+
+    <TextView
+        android:id="@+id/sunset"
+        style="@style/customText"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="00:21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sunrise" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
