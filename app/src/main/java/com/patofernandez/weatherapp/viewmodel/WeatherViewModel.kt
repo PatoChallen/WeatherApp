@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
+import com.patofernandez.weatherapp.utils.Utils
 
 class WeatherViewModel : ViewModel() {
 
@@ -20,6 +21,10 @@ class WeatherViewModel : ViewModel() {
     fun getWeatherForecastByCoords(lat: Double, lon: Double): LiveData<WeatherForecastApiResponse> {
         weatherForecastApiResponse = weatherRepository.getWeatherForecastByCoords(lat, lon)
         return weatherForecastApiResponse
+    }
+
+    fun getWheaterHoursByDay(date: Long): List<CurrentWeatherApiResponse> {
+        return weatherForecastApiResponse.value!!.list.filter { Utils.formatedDay(it.dt) == Utils.formatedDay(date) }
     }
 
 }

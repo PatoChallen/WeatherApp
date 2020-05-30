@@ -1,7 +1,6 @@
 package com.patofernandez.weatherapp.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import com.patofernandez.weatherapp.utils.Utils
 import com.patofernandez.weatherapp.view.CustomWeatherForecastView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.weather_forecast_item.view.*
-
 
 class WeatherForecastAdapter(
     private var forecast: List<CurrentWeatherApiResponse>,

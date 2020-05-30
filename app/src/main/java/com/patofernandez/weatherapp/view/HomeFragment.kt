@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.gms.location.LocationServices
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.patofernandez.weatherapp.R
+import com.patofernandez.weatherapp.adapters.WeatherHoursAdapter
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.utils.Utils
 import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
@@ -33,11 +35,11 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     @BindView(R.id.imgWeather) lateinit var mImgWeather :ImageView
     @BindView(R.id.temperature) lateinit var mTemperature :TextView
     @BindView(R.id.date) lateinit var mDate :TextView
-//    @BindView(R.id.visibility) lateinit var mVisibility :TextView
     @BindView(R.id.humidity) lateinit var mHumidity :TextView
     @BindView(R.id.pressure) lateinit var mPressure :TextView
     @BindView(R.id.sunrise) lateinit var mSunrise :TextView
     @BindView(R.id.sunset) lateinit var mSunset :TextView
+    @BindView(R.id.weathweHours) lateinit var weathweHours :RecyclerView
     @BindView(R.id.customForecast) lateinit var mCustomForecast :CustomWeatherForecastView
 
     private lateinit var viewModel: WeatherViewModel
@@ -62,33 +64,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private fun updateView() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-//            viewModel.getCurrentWeatherByCoords(location.latitude, location.longitude)
-//                .observe(requireActivity(), Observer { currentWeather ->
-//                    Log.e("sasa", "Location accuracy ${location.latitude} ${location.longitude}")
-//                    currentWeather?.let {
-//                        updateMap(LatLng(location.latitude, location.longitude), currentWeather.name)
-//                        mCity.text = currentWeather.name
-//                        currentWeather.sys?.let { sys ->
-//                            mCountry.text = ", ${sys.country}"
-//                            mSunrise.text = Utils.formatedTime(sys.sunrise)
-//                            mSunset.text = Utils.formatedTime(sys.sunset)
-//                        }
-//                        currentWeather.main?.let { main ->
-//                            pressure.text = main.pressure.toString().plus(" hpa")
-//                            temperature.text = Utils.formatedKelvinToCelsius(main.temp)
-//                            humidity.text = main.humidity.toString().plus(" %")
-//                        }
-//                        visibility.text = Utils.formatedVisibility(currentWeather.visibility)
-//                        date.text = Utils.formatedDate(currentWeather.dt)
-//                        currentWeather.weather.first()?.let {
-//                            Picasso
-//                                .get()
-//                                .load("https://openweathermap.org/img/wn/${it.icon}@4x.png")
-//                                .into(imgWeather)
-//                        }
-//                    }
-//                })
-            Log.e("sasa", "Location accuracy ${location.latitude} ${location.longitude}")
+            Log.e(TAG, "Location accuracy ${location.latitude} ${location.longitude}")
             viewModel.getWeatherForecastByCoords(location.latitude, location.longitude)
                 .observe(requireActivity(), Observer {
                     mCustomForecast.setWeatherForecastData(
@@ -120,12 +96,13 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private fun updateActualView(currentWeather: CurrentWeatherApiResponse?) {
         currentWeather?.let {
+            val hourDara = viewModel.getWheaterHoursByDay(currentWeather.dt)
+            val currentWeather = hourDara.first()
             currentWeather.main?.let { main ->
-                mPressure.text = "Presión: ${main.pressure} hpa"
+                mPressure.text = getString(R.string.pressure_text, main.pressure)
                 mTemperature.text = Utils.formatedKelvinToCelsius(main.temp)
-                mHumidity.text = "Humedad: ${main.humidity} %"
+                mHumidity.text = getString(R.string.humidity_text, main.humidity)
             }
-//            mVisibility.text = Utils.formatedVisibility(currentWeather.visibility)
             mDate.text = Utils.formatedDate(currentWeather.dt)
             currentWeather.weather.first()?.let {
                 Picasso
@@ -133,6 +110,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                     .load("https://openweathermap.org/img/wn/${it.icon}@4x.png")
                     .into(mImgWeather)
             }
+            weathweHours.adapter = WeatherHoursAdapter(hourDara)
         }
     }
 
@@ -152,6 +130,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     companion object {
+        const val TAG = "HomeFragment"
         const val ZOOM_DEFAULT = 12F
     }
 
