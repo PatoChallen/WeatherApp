@@ -10,12 +10,12 @@ import butterknife.ButterKnife
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
 
-class HomeFragment : Fragment() {
+class SelectLocationFragment : Fragment() {
 
     private lateinit var viewModel: WeatherViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.home_fragment, container, false)
+        val view = inflater.inflate(R.layout.select_location_fragment, container, false)
         ButterKnife.bind(this, view)
         return view
     }

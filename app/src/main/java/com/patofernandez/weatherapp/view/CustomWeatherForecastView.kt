@@ -8,7 +8,7 @@ import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.adapters.WeatherForecastAdapter
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
-import com.patofernandez.weatherapp.utils.Utils
+import com.patofernandez.weatherapp.utils.FormatUtils
 import kotlinx.android.synthetic.main.custom_weather_forecast.view.*
 
 class CustomWeatherForecastView : ConstraintLayout {
@@ -22,11 +22,11 @@ class CustomWeatherForecastView : ConstraintLayout {
     }
 
     fun setWeatherForecastData(data: WeatherForecastApiResponse, listener: OnForecastClickListener) {
-        val formatedData = data.list.distinctBy { Utils.formatedDay(it.date) }.map { Gson().fromJson(Gson().toJson(it), CurrentWeatherApiResponse::class.java) }
+        val formatedData = data.list.distinctBy { FormatUtils.formatedDay(it.date) }.map { Gson().fromJson(Gson().toJson(it), CurrentWeatherApiResponse::class.java) }
         formatedData.forEach { item ->
             var tempMax = item.main!!.tempMax
             var tempMin = item.main!!.tempMin
-            data.list.filter { Utils.formatedDay(it.date) == Utils.formatedDay(item.date) }.forEach {
+            data.list.filter { FormatUtils.formatedDay(it.date) == FormatUtils.formatedDay(item.date) }.forEach {
                 if (it.main!!.tempMax > tempMax) tempMax = it.main!!.tempMax
                 if (it.main!!.tempMin < tempMin) tempMin = it.main!!.tempMin
             }

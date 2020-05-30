@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.patofernandez.weatherapp.view.HomeFragment"
+        android:name="com.patofernandez.weatherapp.view.LocationWeatherFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment"/>
+        tools:layout="@layout/location_weather_fragment"/>
 </navigation>

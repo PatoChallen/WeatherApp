@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
-import com.patofernandez.weatherapp.utils.Utils
+import com.patofernandez.weatherapp.utils.FormatUtils
 
 class WeatherViewModel : ViewModel() {
 
@@ -24,7 +24,7 @@ class WeatherViewModel : ViewModel() {
     }
 
     fun getWheaterHoursByDay(date: Long): List<CurrentWeatherApiResponse> {
-        return weatherForecastApiResponse.value!!.list.filter { Utils.formatedDay(it.date) == Utils.formatedDay(date) }
+        return weatherForecastApiResponse.value!!.list.filter { FormatUtils.formatedDay(it.date) == FormatUtils.formatedDay(date) }
     }
 
 }

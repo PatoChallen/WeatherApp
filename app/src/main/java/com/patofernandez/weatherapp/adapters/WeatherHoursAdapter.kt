@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
-import com.patofernandez.weatherapp.utils.Utils
+import com.patofernandez.weatherapp.utils.FormatUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.weather_forecast_item.view.imgWeather
 import kotlinx.android.synthetic.main.weather_forecast_item.view.tempMax
@@ -27,7 +27,7 @@ class WeatherHoursAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = forecastHours[position]
-        holder.date.text = Utils.formatedHour(item.date)
+        holder.date.text = FormatUtils.formatedHour(item.date)
         item.weather.first()?.let { weather ->
             Picasso
                 .get()
@@ -35,8 +35,8 @@ class WeatherHoursAdapter(
                 .into(holder.imgWeather)
         }
         item.main?.let { main ->
-            holder.tempMin.text = Utils.formatedKelvinToCelsius(main.tempMin)
-            holder.tempMax.text = Utils.formatedKelvinToCelsius(main.tempMax)
+            holder.tempMin.text = FormatUtils.formatedKelvinToCelsius(main.tempMin)
+            holder.tempMax.text = FormatUtils.formatedKelvinToCelsius(main.tempMax)
         }
 
     }

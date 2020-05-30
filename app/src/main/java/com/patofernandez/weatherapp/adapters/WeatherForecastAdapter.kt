@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
-import com.patofernandez.weatherapp.utils.Utils
+import com.patofernandez.weatherapp.utils.FormatUtils
 import com.patofernandez.weatherapp.view.CustomWeatherForecastView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.weather_forecast_item.view.*
@@ -41,7 +41,7 @@ class WeatherForecastAdapter(
     @Suppress("DEPRECATION")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = forecast[position]
-        holder.date.text = Utils.formatedDay(item.date)
+        holder.date.text = FormatUtils.formatedDay(item.date)
         if (indexSelected == position) {
             holder.card.setCardBackgroundColor(context.resources.getColor(R.color.cardActive))
         } else {
@@ -54,8 +54,8 @@ class WeatherForecastAdapter(
                 .into(holder.imgWeather)
         }
         item.main?.let { main ->
-            holder.tempMin.text = Utils.formatedKelvinToCelsius(main.tempMin)
-            holder.tempMax.text = Utils.formatedKelvinToCelsius(main.tempMax)
+            holder.tempMin.text = FormatUtils.formatedKelvinToCelsius(main.tempMin)
+            holder.tempMax.text = FormatUtils.formatedKelvinToCelsius(main.tempMax)
             holder.humidity.text = main.humidity.toString().plus(" %")
             holder.pressure.text = main.pressure.toString().plus(" hpa")
         }
