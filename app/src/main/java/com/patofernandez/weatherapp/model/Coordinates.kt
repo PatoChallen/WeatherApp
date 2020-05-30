@@ -1,6 +1,6 @@
 package com.patofernandez.weatherapp.model
 
-class Coordinates {
-    var lon: Double = .0
+data class Coordinates (
+    var lon: Double = .0,
     var lat: Double = .0
-}
+)

@@ -38,6 +38,14 @@ class Utils {
             }
         }
 
+        fun formatedHour(time: Long): String {
+            return with(Calendar.getInstance().apply {
+                timeInMillis = time * 1000
+            }) {
+                return@with DateFormat.format("HH:mm", this.time).toString()
+            }
+        }
+
 //        fun formatedVisibility(visibility: Double): String {
 //            return BigDecimal(visibility / 1000).setScale(0, RoundingMode.HALF_EVEN).toString().plus(" Km")
 //        }
