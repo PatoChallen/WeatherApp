@@ -41,7 +41,7 @@ class WeatherForecastAdapter(
     @Suppress("DEPRECATION")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = forecast[position]
-        holder.date.text = Utils.formatedDay(item.dt)
+        holder.date.text = Utils.formatedDay(item.date)
         if (indexSelected == position) {
             holder.card.setCardBackgroundColor(context.resources.getColor(R.color.cardActive))
         } else {
@@ -54,8 +54,8 @@ class WeatherForecastAdapter(
                 .into(holder.imgWeather)
         }
         item.main?.let { main ->
-            holder.tempMin.text = Utils.formatedKelvinToCelsius(main.temp_min)
-            holder.tempMax.text = Utils.formatedKelvinToCelsius(main.temp_max)
+            holder.tempMin.text = Utils.formatedKelvinToCelsius(main.tempMin)
+            holder.tempMax.text = Utils.formatedKelvinToCelsius(main.tempMax)
             holder.humidity.text = main.humidity.toString().plus(" %")
             holder.pressure.text = main.pressure.toString().plus(" hpa")
         }

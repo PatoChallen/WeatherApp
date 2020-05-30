@@ -24,7 +24,7 @@ class WeatherViewModel : ViewModel() {
     }
 
     fun getWheaterHoursByDay(date: Long): List<CurrentWeatherApiResponse> {
-        return weatherForecastApiResponse.value!!.list.filter { Utils.formatedDay(it.dt) == Utils.formatedDay(date) }
+        return weatherForecastApiResponse.value!!.list.filter { Utils.formatedDay(it.date) == Utils.formatedDay(date) }
     }
 
 }

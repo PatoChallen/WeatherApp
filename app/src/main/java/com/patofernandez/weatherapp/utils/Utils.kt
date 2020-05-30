@@ -1,8 +1,6 @@
 package com.patofernandez.weatherapp.utils
 
 import android.text.format.DateFormat
-import java.math.BigDecimal
-import java.math.RoundingMode
 import java.util.*
 
 class Utils {
@@ -26,7 +24,7 @@ class Utils {
             return with(Calendar.getInstance().apply {
                 timeInMillis = time * 1000
             }) {
-                return@with DateFormat.format("EEEE dd 'de' MMMM", this.time).toString().capitalize()
+                return@with DateFormat.format("EEE dd 'de' MMMM", this.time).toString().capitalize()
             }
         }
 

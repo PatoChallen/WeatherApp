@@ -96,14 +96,14 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private fun updateActualView(currentWeather: CurrentWeatherApiResponse?) {
         currentWeather?.let {
-            val hourDara = viewModel.getWheaterHoursByDay(currentWeather.dt)
+            val hourDara = viewModel.getWheaterHoursByDay(currentWeather.date)
             val currentWeather = hourDara.first()
             currentWeather.main?.let { main ->
                 mPressure.text = getString(R.string.pressure_text, main.pressure)
                 mTemperature.text = Utils.formatedKelvinToCelsius(main.temp)
                 mHumidity.text = getString(R.string.humidity_text, main.humidity)
             }
-            mDate.text = Utils.formatedDate(currentWeather.dt)
+            mDate.text = Utils.formatedDate(currentWeather.date)
             currentWeather.weather.first()?.let {
                 Picasso
                     .get()

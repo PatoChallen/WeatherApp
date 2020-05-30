@@ -27,7 +27,7 @@ class WeatherHoursAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = forecastHours[position]
-        holder.date.text = Utils.formatedHour(item.dt)
+        holder.date.text = Utils.formatedHour(item.date)
         item.weather.first()?.let { weather ->
             Picasso
                 .get()
@@ -35,8 +35,8 @@ class WeatherHoursAdapter(
                 .into(holder.imgWeather)
         }
         item.main?.let { main ->
-            holder.tempMin.text = Utils.formatedKelvinToCelsius(main.temp_min)
-            holder.tempMax.text = Utils.formatedKelvinToCelsius(main.temp_max)
+            holder.tempMin.text = Utils.formatedKelvinToCelsius(main.tempMin)
+            holder.tempMax.text = Utils.formatedKelvinToCelsius(main.tempMax)
         }
 
     }

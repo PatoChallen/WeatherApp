@@ -1,6 +1,10 @@
 package com.patofernandez.weatherapp.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Coordinates (
-    var lon: Double = .0,
-    var lat: Double = .0
+    @SerializedName("lon")
+    var longitude: Double = .0,
+    @SerializedName("lat")
+    var latitude: Double = .0
 )

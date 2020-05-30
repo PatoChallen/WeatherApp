@@ -22,16 +22,16 @@ class CustomWeatherForecastView : ConstraintLayout {
     }
 
     fun setWeatherForecastData(data: WeatherForecastApiResponse, listener: OnForecastClickListener) {
-        val formatedData = data.list.distinctBy { Utils.formatedDay(it.dt) }.map { Gson().fromJson(Gson().toJson(it), CurrentWeatherApiResponse::class.java) }
+        val formatedData = data.list.distinctBy { Utils.formatedDay(it.date) }.map { Gson().fromJson(Gson().toJson(it), CurrentWeatherApiResponse::class.java) }
         formatedData.forEach { item ->
-            var tempMax = item.main!!.temp_max
-            var tempMin = item.main!!.temp_min
-            data.list.filter { Utils.formatedDay(it.dt) == Utils.formatedDay(item.dt) }.forEach {
-                if (it.main!!.temp_max > tempMax) tempMax = it.main!!.temp_max
-                if (it.main!!.temp_min < tempMin) tempMin = it.main!!.temp_min
+            var tempMax = item.main!!.tempMax
+            var tempMin = item.main!!.tempMin
+            data.list.filter { Utils.formatedDay(it.date) == Utils.formatedDay(item.date) }.forEach {
+                if (it.main!!.tempMax > tempMax) tempMax = it.main!!.tempMax
+                if (it.main!!.tempMin < tempMin) tempMin = it.main!!.tempMin
             }
-            item.main!!.temp_max = tempMax
-            item.main!!.temp_min = tempMin
+            item.main!!.tempMax = tempMax
+            item.main!!.tempMin = tempMin
         }
         weatherForecast.adapter = WeatherForecastAdapter(formatedData, listener)
     }
