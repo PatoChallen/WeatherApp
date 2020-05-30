@@ -11,7 +11,7 @@ class Utils {
         private const val KELVIN_CONSTANT = 273
 
         fun formatedKelvinToCelsius(temp: Double): String {
-            return BigDecimal(temp - KELVIN_CONSTANT).setScale(1, RoundingMode.HALF_EVEN).toString().plus(" ºC")
+            return (temp.toInt() - KELVIN_CONSTANT).toString().plus("º")
         }
 
         fun formatedTime(time: Long): String {
@@ -26,7 +26,7 @@ class Utils {
             return with(Calendar.getInstance().apply {
                 timeInMillis = time * 1000
             }) {
-                return@with DateFormat.format("dd/MM/yyyy hh:mm:ss", this.time).toString()
+                return@with DateFormat.format("EEEE dd 'de' MMMM", this.time).toString().capitalize()
             }
         }
 
@@ -38,9 +38,9 @@ class Utils {
             }
         }
 
-        fun formatedVisibility(visibility: Double): String {
-            return BigDecimal(visibility / 1000).setScale(0, RoundingMode.HALF_EVEN).toString().plus(" Km")
-        }
+//        fun formatedVisibility(visibility: Double): String {
+//            return BigDecimal(visibility / 1000).setScale(0, RoundingMode.HALF_EVEN).toString().plus(" Km")
+//        }
 
     }
 }
