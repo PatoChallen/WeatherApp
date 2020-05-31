@@ -2,10 +2,12 @@ package com.patofernandez.weatherapp.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.maps.model.LatLng
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
 import com.patofernandez.weatherapp.services.RetrofitService.createService
 import com.patofernandez.weatherapp.services.OpenWeatherApi
+import com.patofernandez.weatherapp.utils.Preferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +47,10 @@ class WeatherRepository {
             }
         })
         return weatherForecastApiResponseData
+    }
+
+    fun getFavoriteLocations(): List<LatLng> {
+        return Preferences.favoriteLocations.getFavoriteLocations()
     }
 
     companion object {

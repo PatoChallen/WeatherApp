@@ -125,7 +125,7 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback {
     private fun updateMap(latLng: LatLng, title: String) {
         mMap.apply {
             addMarker(MarkerOptions().position(latLng).title(title))
-            moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_DEFAULT))
+            animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_DEFAULT))
         }
     }
 
