@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="3px"
         app:cardPreventCornerOverlap="true"
@@ -43,11 +43,9 @@
             <TextView
                 android:id="@+id/tempMax"
                 style="@style/customItemText"
-                android:text="19 ºC"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:text="19º"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgWeather" />
 
             <ImageView
@@ -55,23 +53,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginBottom="2dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_arrow_up"
                 app:layout_constraintBottom_toBottomOf="@+id/tempMax"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@+id/tempMax"
+                app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tempMax" />
 
             <TextView
                 android:id="@+id/tempMin"
                 style="@style/customItemText"
-                android:text="24 ºC"
-                app:layout_constraintEnd_toStartOf="@+id/imageView4"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:text="9º"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tempMax" />
 
             <ImageView
@@ -79,14 +73,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginBottom="2dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_arrow_down"
                 app:layout_constraintBottom_toBottomOf="@+id/tempMin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@+id/tempMin"
+                app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/tempMin" />
 
             <TextView
@@ -105,6 +96,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/humidity" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.50374067" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

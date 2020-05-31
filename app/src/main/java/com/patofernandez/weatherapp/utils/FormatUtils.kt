@@ -3,10 +3,11 @@ package com.patofernandez.weatherapp.utils
 import android.text.format.DateFormat
 import java.util.*
 
-class Utils {
+class FormatUtils {
     companion object {
 
         private const val KELVIN_CONSTANT = 273
+        private const val REFRESH_TIME_IN_HOURS = 3
 
         fun formatedKelvinToCelsius(temp: Double): String {
             return (temp.toInt() - KELVIN_CONSTANT).toString().plus("º")
@@ -40,7 +41,10 @@ class Utils {
             return with(Calendar.getInstance().apply {
                 timeInMillis = time * 1000
             }) {
-                return@with DateFormat.format("HH:mm", this.time).toString()
+                val initHour: String = DateFormat.format("HH:mm", this.time).toString()
+                this.add(Calendar.HOUR, REFRESH_TIME_IN_HOURS)
+                val endHour: String = DateFormat.format("HH:mm", this.time).toString()
+                return@with "$initHour - $endHour"
             }
         }
 

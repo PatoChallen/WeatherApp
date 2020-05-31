@@ -19,8 +19,8 @@ interface OpenWeatherApi {
 
     @GET("forecast")
     fun getWeatherForecastByCoords(@Query("lat") lat: Double,
-                           @Query("lon") lon: Double,
-                           @Query("lang") lang: String,
-                           @Query("appid") appid: String): Call<WeatherForecastApiResponse>
+                                   @Query("lon") lon: Double,
+                                   @Query("lang") lang: String,
+                                   @Query("appid") appid: String): Call<WeatherForecastApiResponse>
 
 }
