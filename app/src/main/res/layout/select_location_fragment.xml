@@ -46,70 +46,98 @@
         app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView
-        android:id="@+id/instructions"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="15dp"
-        android:text="Empecemos!\nPrimero, seleccione una ubicación en el mapa\nLuego confirme para agregarla a sus ubicaciones favoritas"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline"/>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardDetails"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:cardCornerRadius="10dp"
-        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="@id/guideline"
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="City: PESCADERO"
+                android:fontFamily="serif"
+                android:text="Buenos Aires"
+                android:paddingTop="5dp"
                 android:textColor="@color/cityTitle"
+                android:textSize="30sp"
                 android:textStyle="bold"
-                android:textSize="35sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/latLng" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/region"
+                android:id="@+id/temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_marginStart="25dp"
                 android:fontFamily="sans-serif-condensed-light"
-                android:textStyle="bold"
-                android:text="California United States"
-                android:textSize="25sp"
+                android:letterSpacing="-0.05"
+                android:text="22º"
+                android:textSize="80sp"
+                app:layout_constraintBottom_toTopOf="@+id/latLng"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/city" />
+                app:layout_constraintTop_toBottomOf="@id/city" />
 
             <TextView
-                android:id="@+id/country"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:fontFamily="sans-serif-condensed-light"
+                android:id="@+id/tempMax"
+                style="@style/customItemText"
+                android:text="24º"
+                android:layout_marginStart="15dp"
                 android:textStyle="bold"
-                android:text="United States of America"
-                android:textSize="25sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/region" />
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@+id/tempMin"
+                app:layout_constraintStart_toEndOf="@+id/temp"
+                app:layout_constraintTop_toTopOf="@+id/temp" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_arrow_up"
+                app:layout_constraintBottom_toBottomOf="@+id/tempMax"
+                app:layout_constraintStart_toEndOf="@+id/tempMax"
+                app:layout_constraintTop_toTopOf="@+id/tempMax" />
+
+            <TextView
+                android:id="@+id/tempMin"
+                style="@style/customItemText"
+                android:text="19º"
+                android:layout_marginStart="15dp"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@id/tempMax"
+                app:layout_constraintStart_toEndOf="@+id/temp"
+                app:layout_constraintBottom_toBottomOf="@+id/temp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintBottom_toBottomOf="@+id/tempMin"
+                app:layout_constraintStart_toEndOf="@+id/tempMin"
+                app:layout_constraintTop_toTopOf="@+id/tempMin" />
+
+            <ImageView
+                android:id="@+id/imgWeather"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/clouds"
+                app:layout_constraintBottom_toBottomOf="@+id/temp"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/temp" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -120,28 +148,43 @@
                 app:layout_constraintEnd_toStartOf="@+id/latLng"
                 app:layout_constraintTop_toTopOf="@+id/latLng" />
 
-            <Button
-                android:id="@+id/btnConfirm"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Agregar Ubicación"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
             <TextView
                 android:id="@+id/latLng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:padding="5dp"
-                android:text="region: California United States"
+                android:text="37.42,-121.89"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/instructions"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="15dp"
+                android:text="Empecemos!\n\nPrimero, seleccione una ubicación en el mapa\nLuego, confirme para agregarla a sus ubicaciones favoritas"
+                android:textSize="25sp"
+                android:background="@color/cardActive"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Agregar Ubicación"
+        android:layout_margin="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

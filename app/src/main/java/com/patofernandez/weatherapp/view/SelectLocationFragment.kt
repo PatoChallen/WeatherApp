@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -25,18 +26,21 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.patofernandez.weatherapp.R
-import com.patofernandez.weatherapp.utils.Preferences
-import com.patofernandez.weatherapp.viewmodel.GeocodingViewModel
+import com.patofernandez.weatherapp.utils.FormatUtils
+import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.select_location_fragment.*
 
 class SelectLocationFragment : Fragment(), OnMapReadyCallback {
 
-    private lateinit var viewModel: GeocodingViewModel
+    private lateinit var weatherViewModel: WeatherViewModel
     private var mMap: GoogleMap? = null
 
+    @BindView(R.id.imgWeather) lateinit var mImgWeather: ImageView
     @BindView(R.id.city) lateinit var mCity: TextView
-    @BindView(R.id.country) lateinit var mCountry: TextView
-    @BindView(R.id.region) lateinit var mRegion: TextView
+    @BindView(R.id.temp) lateinit var mTemp: TextView
+    @BindView(R.id.tempMax) lateinit var mTempMax: TextView
+    @BindView(R.id.tempMin) lateinit var mTempMin: TextView
     @BindView(R.id.latLng) lateinit var mLatLng: TextView
     @BindView(R.id.progress) lateinit var mProgress: ProgressBar
     @BindView(R.id.cardDetails) lateinit var mCardDetails: CardView
@@ -58,27 +62,22 @@ class SelectLocationFragment : Fragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         Log.e(TAG, "onActivityCreated")
         super.onActivityCreated(savedInstanceState)
+        mInstructions.visibility = View.VISIBLE
+        weatherViewModel = ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java)
         btnConfirm.setOnClickListener {
             lastMarker?.let {
-                viewModel.addFavoriteLocation(it.position)
+                weatherViewModel.addFavoriteLocation(it.position)
             }
             findNavController().navigate(R.id.action_selectLocationFragment_to_homeFragment)
         }
-        mCity.setOnClickListener {
-            Log.e(TAG, "Favorite Locations: ${Gson().toJson(viewModel.getFavoriteLocations())}")
-        }
-        mCountry.setOnClickListener {
-            Preferences.favoriteLocations.clear()
-        }
-        viewModel = ViewModelProvider(requireActivity()).get(GeocodingViewModel::class.java)
-        viewModel.getReverseGeocoding().observe(requireActivity(), Observer { reverseGeocoding ->
-            if (reverseGeocoding == null) {
+        weatherViewModel.getSelectedLocation().observe(requireActivity(), Observer { selectedLocation ->
+            if (selectedLocation == null) {
                 showLoader()
                 attemps ++
                 if (attemps <= MAX_ATTEMPS) {
                     lastMarker?.let {
                         with(it.position) {
-                            viewModel.setCoordinates(latitude, longitude)
+                            weatherViewModel.setCoordinates(latitude, longitude)
                         }
                     }
                 } else {
@@ -87,11 +86,22 @@ class SelectLocationFragment : Fragment(), OnMapReadyCallback {
             } else {
                 hideLoader()
                 attemps = 0
-                with (reverseGeocoding) {
-                    mCity.text = city
-                    mCountry.text = country
-                    mRegion.text = region
-                    mLatLng.text = "$latitude, $longitude"
+                with (selectedLocation) {
+                    mCity.text = "$name, ${sys?.country}"
+                    weather.first()?.let { weather ->
+                        Picasso
+                            .get()
+                            .load("https://openweathermap.org/img/wn/${weather.icon}@4x.png")
+                            .into(mImgWeather)
+                    }
+                    main?.let { main ->
+                        mTemp.text = FormatUtils.formatedKelvinToCelsius(main.temp)
+                        mTempMax.text = FormatUtils.formatedKelvinToCelsius(main.tempMax)
+                        mTempMin.text = FormatUtils.formatedKelvinToCelsius(main.tempMin)
+                    }
+                    coordinates?.let { coordinates ->
+                        mLatLng.text = "${coordinates.latitude}, ${coordinates.longitude}"
+                    }
                 }
             }
         })
@@ -120,7 +130,7 @@ class SelectLocationFragment : Fragment(), OnMapReadyCallback {
             lastMarker = addMarker(MarkerOptions().position(latLng).title(title))
             animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_DEFAULT))
         }
-        viewModel.setCoordinates(latLng.latitude, latLng.longitude)
+        weatherViewModel.setCoordinates(latLng.latitude, latLng.longitude)
         showLoader()
     }
 

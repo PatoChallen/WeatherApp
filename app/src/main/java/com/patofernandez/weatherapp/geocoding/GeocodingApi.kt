@@ -11,6 +11,12 @@ interface GeocodingApi {
     @GET("/{lat},{lng}")
     fun reverseGeocoding(@Path("lat") lat: Double,
                          @Path("lng") lon: Double,
+                         @Query("geoit") lang: String,
+                         @Query("auth") auth: String): Call<ReverseGeocodingApiResponse>
+
+    @GET("/{lat},{lng}")
+    fun reverseGeocoding(@Path("lat") lat: Double,
+                         @Path("lng") lon: Double,
                          @Query("geoit") lang: String): Call<ReverseGeocodingApiResponse>
 
 }

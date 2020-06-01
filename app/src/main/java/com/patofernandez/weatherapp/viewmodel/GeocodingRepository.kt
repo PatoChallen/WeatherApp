@@ -14,7 +14,7 @@ import retrofit2.Response
 
 class GeocodingRepository {
 
-    private var reverseGeocodingApiResponseData = MutableLiveData<ReverseGeocodingApiResponse>()
+    private val reverseGeocodingApiResponseData = MutableLiveData<ReverseGeocodingApiResponse>()
     private val geocodingApi: GeocodingApi = createService(
         GeocodingApi::class.java
     )
@@ -35,14 +35,6 @@ class GeocodingRepository {
         return reverseGeocodingApiResponseData
     }
 
-    fun getFavoriteLocations(): List<LatLng> {
-        return Preferences.favoriteLocations.getFavoriteLocations()
-    }
-
-    fun addFavoriteLocation(latLng: LatLng) {
-        Preferences.favoriteLocations.addToFavorite(latLng)
-    }
-
     companion object {
         private var geocodingRepository: GeocodingRepository? = null
         fun getInstance(): GeocodingRepository {
@@ -54,6 +46,7 @@ class GeocodingRepository {
 
         const val TAG = "GeocodingRepository"
         const val RESPONSE_FORMAT = "json"
+        const val AUTH = "202452702209908236304x6126"
     }
 
 }

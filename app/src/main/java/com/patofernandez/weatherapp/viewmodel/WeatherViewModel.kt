@@ -2,6 +2,7 @@ package com.patofernandez.weatherapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
@@ -14,14 +15,9 @@ class WeatherViewModel : ViewModel() {
     private val weatherRepository = WeatherRepository.getInstance()
     private var currentWeatherApiResponseData = MutableLiveData<CurrentWeatherApiResponse>()
     private var weatherForecastApiResponse = MutableLiveData<WeatherForecastApiResponse>()
+    private val favoriteLocations = weatherRepository.getFavoriteLocations()
 
-    fun getCurrentWeatherByCoords(lat: Double, lng: Double): LiveData<CurrentWeatherApiResponse> {
-        currentWeatherApiResponseData = weatherRepository.getCurrentWeatherByCoords(lat, lng)
-        return currentWeatherApiResponseData
-    }
-
-    fun getWeatherForecastByCoords(lat: Double, lng: Double): LiveData<WeatherForecastApiResponse> {
-        weatherForecastApiResponse = weatherRepository.getWeatherForecastByCoords(lat, lng)
+    fun getWeatherForecast(): LiveData<WeatherForecastApiResponse> {
         return weatherForecastApiResponse
     }
 
@@ -29,8 +25,25 @@ class WeatherViewModel : ViewModel() {
         return weatherForecastApiResponse.value!!.list.filter { FormatUtils.formatedDay(it.date) == FormatUtils.formatedDay(date) }
     }
 
-    fun getFavoriteLocations(): List<String> {
-        return weatherRepository.getFavoriteLocations().map { Gson().toJson(it) }
+    fun getFavoriteLocations(): MutableLiveData<List<CurrentWeatherApiResponse>> {
+        return favoriteLocations
+    }
+
+    fun addFavoriteLocation(latLng: LatLng) {
+        weatherRepository.addFavoriteLocation(latLng)
+    }
+
+    fun getSelectedLocation(): MutableLiveData<CurrentWeatherApiResponse> {
+        return weatherRepository.getSelectedLocation()
+    }
+
+    fun setCoordinates(lat: Double, lon: Double) {
+        weatherRepository.setCoordinates(lat, lon)
+    }
+
+    fun setCurrentWeather(currentWeather: CurrentWeatherApiResponse) {
+        currentWeatherApiResponseData.value = currentWeather
+        weatherForecastApiResponse = weatherRepository.getWeatherForecastByCoords(currentWeather.coordinates!!.latitude, currentWeather.coordinates!!.longitude)
     }
 
 }

@@ -13,13 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.gson.Gson
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.adapters.WeatherHoursAdapter
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
@@ -45,6 +45,7 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback {
     private lateinit var viewModel: WeatherViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.e(TAG, "onCreateView")
         val view = inflater.inflate(R.layout.location_weather_fragment, container, false)
         ButterKnife.bind(this, view)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -53,48 +54,40 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        Log.e(TAG, "onActivityCreated")
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java)
         mImgWeather.setOnClickListener {
             updateView()
         }
-        updateView()
     }
 
     private fun updateView() {
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            Log.e(TAG, "Location accuracy ${location.latitude} ${location.longitude}")
-            viewModel.getWeatherForecastByCoords(location.latitude, location.longitude)
-                .observe(requireActivity(), Observer {
-                    mCustomForecast.setWeatherForecastData(
-                        it,
-                        object : CustomWeatherForecastView.OnForecastClickListener {
-                            override fun onForecastClick(currentWeather: CurrentWeatherApiResponse) {
-                                updateActualView(currentWeather)
-                            }
-                        })
-                    it.city?.let { city ->
-                        updateMap(LatLng(location.latitude, location.longitude), city.name)
-                        mCity.text = "${city.name}, ${city.country}"
-                        mSunrise.text = FormatUtils.formatedTime(city.sunrise)
-                        mSunset.text = FormatUtils.formatedTime(city.sunset)
+        Log.e(TAG, "updateView")
+        viewModel.getWeatherForecast().observe(requireActivity(), Observer {
+            Log.e(TAG, Gson().toJson(it))
+            if (it == null) return@Observer
+                mCustomForecast.setWeatherForecastData(
+                    it,
+                    object : CustomWeatherForecastView.OnForecastClickListener {
+                        override fun onForecastClick(currentWeather: CurrentWeatherApiResponse) {
+                            updateActualView(currentWeather)
+                        }
+                    })
+                it.city?.let { city ->
+                    city.coord?.let {  coord ->
+                        updateMap(LatLng(coord.latitude, coord.longitude), city.name)
                     }
-                    updateActualView(it.list.first())
-                })
-        }
-        fusedLocationClient.lastLocation.addOnCompleteListener {
-            Log.e("sasa", "Location confirmed")
-        }
-        fusedLocationClient.lastLocation.addOnFailureListener {
-            Log.e("sasa", "Location Failure ${it.message}")
-        }
-        fusedLocationClient.lastLocation.addOnCanceledListener {
-            Log.e("sasa", "Location Canceled")
-        }
+                    mCity.text = "${city.name}, ${city.country}"
+                    mSunrise.text = FormatUtils.formatedTime(city.sunrise)
+                    mSunset.text = FormatUtils.formatedTime(city.sunset)
+                }
+                updateActualView(it.list.first())
+            })
     }
 
     private fun updateActualView(currentWeather: CurrentWeatherApiResponse?) {
+        Log.e(TAG, "updateActualView")
         currentWeather?.let {
             val hourDara = viewModel.getWheaterHoursByDay(currentWeather.date)
             val currentWeather = hourDara.first()
@@ -115,14 +108,17 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        Log.e(TAG, "onMapReady")
         mMap = googleMap
         mMap.uiSettings.apply {
             isScrollGesturesEnabled = false
             isZoomGesturesEnabled = false
         }
+        updateView()
     }
 
     private fun updateMap(latLng: LatLng, title: String) {
+        Log.e(TAG, "updateMap")
         mMap.apply {
             addMarker(MarkerOptions().position(latLng).title(title))
             animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_DEFAULT))
@@ -130,7 +126,7 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback {
     }
 
     companion object {
-        const val TAG = "HomeFragment"
+        const val TAG = "LocationWeatherFragment"
         const val ZOOM_DEFAULT = 12F
     }
 
