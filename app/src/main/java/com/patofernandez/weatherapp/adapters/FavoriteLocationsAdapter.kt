@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import kotlinx.android.synthetic.main.favorite_location_item.view.*
-import kotlinx.android.synthetic.main.weather_forecast_item.view.*
 
 class FavoriteLocationsAdapter(
     private var forecastHours: List<CurrentWeatherApiResponse>,
@@ -31,13 +30,12 @@ class FavoriteLocationsAdapter(
 //                .load("https://openweathermap.org/img/wn/${weather.icon}@4x.png")
 //                .into(holder.imgWeather)
 //        }
+        holder.favDelete.setOnClickListener {
+            mListener?.onFavoriteLocationDelete(item)
+        }
 
-        with(holder.mView) {
-            tag = item
-            setOnClickListener {
-                mListener?.onFavoriteLocationClick(item)
-                notifyDataSetChanged()
-            }
+        holder.mView.setOnClickListener {
+            mListener?.onFavoriteLocationClick(item)
         }
     }
 
@@ -45,8 +43,10 @@ class FavoriteLocationsAdapter(
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val favTitle: TextView = mView.favTitle
+        val favDelete: ImageView = mView.delete
     }
     interface OnFavoriteActionListener {
         fun onFavoriteLocationClick(favoriteLocation: CurrentWeatherApiResponse)
+        fun onFavoriteLocationDelete(favoriteLocation: CurrentWeatherApiResponse)
     }
 }

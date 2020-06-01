@@ -2,13 +2,11 @@ package com.patofernandez.weatherapp.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.google.android.gms.maps.model.LatLng
-import com.google.gson.Gson
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
-import com.patofernandez.weatherapp.services.RetrofitService.createService
 import com.patofernandez.weatherapp.services.OpenWeatherApi
+import com.patofernandez.weatherapp.services.RetrofitService.createService
 import com.patofernandez.weatherapp.utils.Preferences
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +39,7 @@ class WeatherRepository {
         })
     }
 
-    fun getCurrentWeatherByCoords(lat: Double, lon: Double): MutableLiveData<CurrentWeatherApiResponse> {
+    private fun getCurrentWeatherByCoords(lat: Double, lon: Double): MutableLiveData<CurrentWeatherApiResponse> {
         val currentWeatherApiResponseData = MutableLiveData<CurrentWeatherApiResponse>()
         val lang = Locale.getDefault().language
         openWeatherApi.getCurrentWeatherByCoords(lat, lon, lang, KEY).enqueue(object : Callback<CurrentWeatherApiResponse>{
@@ -83,9 +81,20 @@ class WeatherRepository {
         return favoriteLocations
     }
 
-    fun addFavoriteLocation(latLng: LatLng) {
-        Preferences.favoriteLocations.addToFavorite(latLng)
-        getFavoriteLocations()
+    fun addSelectedLocationToFavorites() {
+        selectedLocation.value!!.coordinates?.let {
+            Preferences.favoriteLocations.addToFavorite(LatLng(it.latitude, it.longitude))
+            getFavoriteLocations()
+        }
+    }
+
+    fun removeFavoriteLocation(favoriteLocation: CurrentWeatherApiResponse) {
+        favoriteLocation.coordinates?.let {
+            Preferences.favoriteLocations.removeFromFavorites(LatLng(it.latitude, it.longitude))
+            val updatedFavorites = favoriteLocations.value!!.toMutableList()
+            updatedFavorites.remove(favoriteLocation)
+            favoriteLocations.value = updatedFavorites
+        }
     }
 
     companion object {

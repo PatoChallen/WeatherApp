@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.adapters.FavoriteLocationsAdapter
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
@@ -23,7 +22,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: WeatherViewModel
 
-    @BindView(R.id.btnSelectLocation) lateinit var btnSelectLocation: FloatingActionButton
+    @BindView(R.id.btnPreferences) lateinit var btnSelectLocation: FloatingActionButton
     @BindView(R.id.favoriteLocations) lateinit var mFavoriteLocations: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,8 +33,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        Log.e(TAG, "onActivityCreated")
         super.onActivityCreated(savedInstanceState)
+        Log.e(TAG, "onActivityCreated")
         viewModel = ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java)
         btnSelectLocation.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_selectLocationFragment)
@@ -45,6 +44,10 @@ class HomeFragment : Fragment() {
                 override fun onFavoriteLocationClick(favoriteLocation: CurrentWeatherApiResponse) {
                     viewModel.setCurrentWeather(favoriteLocation)
                     findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
+                }
+
+                override fun onFavoriteLocationDelete(favoriteLocation: CurrentWeatherApiResponse) {
+                    viewModel.removeFavoriteLocation(favoriteLocation)
                 }
             })
         })

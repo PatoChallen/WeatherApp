@@ -1,13 +1,11 @@
 package com.patofernandez.weatherapp
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.location.LocationServices
+import com.google.gson.Gson
 import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -16,32 +14,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e(TAG, "onCreate")
         setContentView(R.layout.main_activity)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            checkPermission();
-        }
         viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient.lastLocation.apply {
+            addOnSuccessListener { location ->
+                Log.e(TAG, "Location ${Gson().toJson(location)}") // ${location.latitude} ${location.longitude}")
+            }
+            addOnFailureListener {
+                Log.e(TAG, "failure ${it.message.toString()}")
+            }
+            addOnCanceledListener {
+                Log.e(TAG, "canceled")
+            }
+            addOnCompleteListener {
+                Log.e(TAG, "complete ${Gson().toJson(it)}")
+            }
+        }
     }
 
-    fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) { //Can add more as per requirement
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                123
-            )
-        }
+    companion object {
+        const val TAG = "MainActivity"
     }
 
 }

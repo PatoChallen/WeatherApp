@@ -31,10 +31,12 @@
     <TextView
         android:id="@+id/city"
         style="@style/customText"
+        android:textSize="24sp"
         android:layout_width="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Buenos Aires, AR"
+        android:textColor="@color/textColor"
         app:layout_constraintEnd_toStartOf="@+id/imgDate"
         app:layout_constraintStart_toEndOf="@+id/imgLocation"
         app:layout_constraintTop_toBottomOf="@id/guideline" />
@@ -42,11 +44,13 @@
     <TextView
         android:id="@+id/date"
         style="@style/customText"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="29/5/2020 2:03"
+        android:textColor="@color/textColor"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/city"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline" />
+        app:layout_constraintTop_toTopOf="@+id/city" />
 
     <ImageView
         android:id="@+id/imgDate"
@@ -62,6 +66,7 @@
         android:id="@+id/temperature"
         style="@style/customText"
         android:layout_marginStart="8dp"
+        android:textColor="@color/textColor"
         android:fontFamily="sans-serif-condensed-light"
         android:letterSpacing="-0.05"
         android:text="18º"
@@ -83,6 +88,7 @@
         android:id="@+id/humidity"
         style="@style/customText"
         android:layout_marginStart="6dp"
+        android:textColor="@color/textColor"
         android:text="72%"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toTopOf="@id/pressure"
@@ -93,6 +99,7 @@
         android:id="@+id/pressure"
         style="@style/customText"
         android:layout_marginStart="6dp"
+        android:textColor="@color/textColor"
         android:text="1012 hpa"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/imgWeather"
@@ -102,6 +109,7 @@
     <TextView
         android:id="@+id/sunrise"
         style="@style/customText"
+        android:textColor="@color/textColor"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
         android:visibility="gone"
@@ -112,6 +120,7 @@
     <TextView
         android:id="@+id/sunset"
         style="@style/customText"
+        android:textColor="@color/textColor"
         android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
         android:visibility="gone"

@@ -13,7 +13,6 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.gms.location.LocationServices
@@ -60,15 +59,13 @@ class SelectLocationFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        Log.e(TAG, "onActivityCreated")
         super.onActivityCreated(savedInstanceState)
+        Log.e(TAG, "onActivityCreated")
         mInstructions.visibility = View.VISIBLE
         weatherViewModel = ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java)
         btnConfirm.setOnClickListener {
-            lastMarker?.let {
-                weatherViewModel.addFavoriteLocation(it.position)
-            }
-            findNavController().navigate(R.id.action_selectLocationFragment_to_homeFragment)
+            weatherViewModel.addSelectedLocationToFavorites()
+            requireActivity().onBackPressed()
         }
         weatherViewModel.getSelectedLocation().observe(requireActivity(), Observer { selectedLocation ->
             if (selectedLocation == null) {
@@ -115,11 +112,6 @@ class SelectLocationFragment : Fragment(), OnMapReadyCallback {
             setOnMapClickListener { latLng->
                 updateMap(latLng, "Nueva Selección")
             }
-        }
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            Log.e(TAG, "Location accuracy ${location.latitude} ${location.longitude}")
-            setCurrentLocationToMap(LatLng(location.latitude, location.longitude))
         }
     }
 
