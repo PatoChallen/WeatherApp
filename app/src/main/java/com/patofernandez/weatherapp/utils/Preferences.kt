@@ -34,9 +34,9 @@ enum class Preferences {
     companion object {
         private var preferences: SharedPreferences? = null
         private fun preferences(): SharedPreferences {
-            if (preferences == null) {
-                preferences = WeatherApplication.getInstance().getSharedPreferences("WeatherPreferences", Context.MODE_PRIVATE)
-            }
+//            if (preferences == null) {
+//                preferences = WeatherApplication.getInstance().getSharedPreferences("WeatherPreferences", Context.MODE_PRIVATE)
+//            }
             return preferences!!
         }
 

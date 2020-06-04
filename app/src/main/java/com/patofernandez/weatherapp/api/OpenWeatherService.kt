@@ -1,12 +1,12 @@
-package com.patofernandez.weatherapp.services
+package com.patofernandez.weatherapp.api
 
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
-import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
+import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.vo.WeatherForecastApiResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface OpenWeatherApi {
+interface OpenWeatherService {
 
     @GET("weather")
     fun getWeather(@Query("appid") appid: String): Call<CurrentWeatherApiResponse>

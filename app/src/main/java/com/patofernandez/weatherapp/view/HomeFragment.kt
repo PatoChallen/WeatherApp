@@ -15,10 +15,11 @@ import butterknife.ButterKnife
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.adapters.FavoriteLocationsAdapter
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.di.Injectable
+import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), Injectable {
 
     private lateinit var viewModel: WeatherViewModel
 

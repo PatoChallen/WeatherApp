@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.patofernandez.weatherapp.R
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.utils.FormatUtils
 import com.patofernandez.weatherapp.view.CustomWeatherForecastView
 import com.squareup.picasso.Picasso

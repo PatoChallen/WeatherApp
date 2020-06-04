@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.patofernandez.weatherapp.R
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.utils.FormatUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.weather_forecast_item.view.imgWeather

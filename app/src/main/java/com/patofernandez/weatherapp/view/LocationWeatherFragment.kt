@@ -22,12 +22,13 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.adapters.WeatherHoursAdapter
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.di.Injectable
+import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.utils.FormatUtils
 import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
 import com.squareup.picasso.Picasso
 
-class LocationWeatherFragment : Fragment(), OnMapReadyCallback {
+class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
 
     private lateinit var mMap: GoogleMap
 

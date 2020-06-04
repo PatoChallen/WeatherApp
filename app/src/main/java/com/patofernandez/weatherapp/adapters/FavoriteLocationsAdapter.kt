@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.patofernandez.weatherapp.R
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
 import kotlinx.android.synthetic.main.favorite_location_item.view.*
 
 class FavoriteLocationsAdapter(

@@ -3,13 +3,39 @@ package com.patofernandez.weatherapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
-import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
+import com.patofernandez.weatherapp.AppExecutors
+import com.patofernandez.weatherapp.api.OpenWeatherService
+import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.vo.WeatherForecastApiResponse
 import com.patofernandez.weatherapp.utils.FormatUtils
+import retrofit2.Call
 
 class WeatherViewModel : ViewModel() {
 
-    private val weatherRepository = WeatherRepository.getInstance()
+    private val weatherRepository = WeatherRepository(AppExecutors(), object : OpenWeatherService{
+        override fun getWeather(appid: String): Call<CurrentWeatherApiResponse> {
+            TODO("Not yet implemented")
+        }
+
+        override fun getCurrentWeatherByCoords(
+            lat: Double,
+            lon: Double,
+            lang: String,
+            appid: String
+        ): Call<CurrentWeatherApiResponse> {
+            TODO("Not yet implemented")
+        }
+
+        override fun getWeatherForecastByCoords(
+            lat: Double,
+            lon: Double,
+            lang: String,
+            appid: String
+        ): Call<WeatherForecastApiResponse> {
+            TODO("Not yet implemented")
+        }
+
+    })
     private var currentWeatherApiResponseData = MutableLiveData<CurrentWeatherApiResponse>()
     private var weatherForecastApiResponse = MutableLiveData<WeatherForecastApiResponse>()
 

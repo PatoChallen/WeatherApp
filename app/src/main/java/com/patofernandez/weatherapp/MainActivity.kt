@@ -7,12 +7,18 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
 import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     private lateinit var viewModel: WeatherViewModel
 
@@ -59,6 +65,8 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     companion object {
         const val TAG = "MainActivity"

@@ -25,12 +25,13 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.patofernandez.weatherapp.R
+import com.patofernandez.weatherapp.di.Injectable
 import com.patofernandez.weatherapp.utils.FormatUtils
 import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.select_location_fragment.*
 
-class SelectLocationFragment : Fragment(), OnMapReadyCallback {
+class SelectLocationFragment : Fragment(), OnMapReadyCallback, Injectable {
 
     private lateinit var weatherViewModel: WeatherViewModel
     private var mMap: GoogleMap? = null
