@@ -9,7 +9,7 @@
         android:id="@+id/card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="3px"
+        android:layout_margin="1px"
         app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,6 +24,7 @@
             <TextView
                 android:id="@+id/date"
                 style="@style/customItemText"
+                android:textColor="@color/textColor"
                 android:text="Fri"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -43,6 +44,7 @@
             <TextView
                 android:id="@+id/tempMax"
                 style="@style/customItemText"
+                android:textColor="@color/textColor"
                 android:text="19º"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -63,6 +65,7 @@
             <TextView
                 android:id="@+id/tempMin"
                 style="@style/customItemText"
+                android:textColor="@color/textColor"
                 android:text="9º"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -83,6 +86,7 @@
             <TextView
                 android:id="@+id/humidity"
                 style="@style/customItemText"
+                android:textColor="@color/textColor"
                 android:text="70%"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,6 +95,7 @@
             <TextView
                 android:id="@+id/pressure"
                 style="@style/customItemText"
+                android:textColor="@color/textColor"
                 android:text="1024 hpa"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"

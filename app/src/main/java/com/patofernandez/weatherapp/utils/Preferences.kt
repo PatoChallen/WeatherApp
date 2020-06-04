@@ -13,8 +13,10 @@ enum class Preferences {
         get() = preferences().getString(name, "").toString()
 
     fun removeFromFavorites(latLng: LatLng) {
-        val updateData = Gson().toJson(string.split("|").filterNot { it.contains(Gson().toJson(latLng)) })
-        preferences().edit().putString(favoriteLocations.name, updateData).apply()
+        val locations = string.removeSuffix("|").split("|").filterNot { it.contains(Gson().toJson(latLng)) }
+        var updateData = ""
+        locations.forEach { updateData += it.plus("|") }
+        preferences().edit().putString(name, updateData).apply()
     }
 
     fun addToFavorite(latLng: LatLng) {
