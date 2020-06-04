@@ -5,27 +5,106 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/favTitle"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:fontFamily="sans-serif-condensed-light"
-        android:textStyle="bold"
-        android:text="United States of America"
-        android:textSize="25sp"
+        android:layout_margin="1dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_delete"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/favTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:fontFamily="sans-serif-condensed-light"
+                android:textStyle="bold"
+                android:text="United States of America"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/favTitle"
+                app:layout_constraintBottom_toBottomOf="@id/favTitle"/>
+
+            <TextView
+                android:id="@+id/temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="sans-serif-condensed-light"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/favTitle"
+                android:text="16º"
+                android:textSize="50sp"
+                android:letterSpacing="-0.1" />
+
+            <ImageView
+                android:id="@+id/imgWeather"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/clouds"
+                app:layout_constraintTop_toTopOf="@id/temp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/temp"/>
+
+            <TextView
+                android:id="@+id/tempMax"
+                style="@style/customText"
+                android:layout_marginStart="6dp"
+                android:textSize="15sp"
+                android:text="32º"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@id/tempMin"
+                app:layout_constraintStart_toEndOf="@+id/temp"
+                app:layout_constraintTop_toTopOf="@+id/temp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_arrow_up"
+                app:layout_constraintStart_toEndOf="@id/tempMax"
+                app:layout_constraintTop_toTopOf="@id/tempMax"
+                app:layout_constraintBottom_toBottomOf="@id/tempMax"/>
+
+            <TextView
+                android:id="@+id/tempMin"
+                style="@style/customText"
+                android:layout_marginStart="6dp"
+                android:textSize="15sp"
+                android:text="20º"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/temp"
+                app:layout_constraintTop_toBottomOf="@+id/tempMax"
+                app:layout_constraintBottom_toBottomOf="@id/temp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintStart_toEndOf="@id/tempMin"
+                app:layout_constraintTop_toTopOf="@id/tempMin"
+                app:layout_constraintBottom_toBottomOf="@id/tempMin"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
