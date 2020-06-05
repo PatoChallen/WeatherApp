@@ -1,6 +1,11 @@
 package com.patofernandez.weatherapp.di
 
+import android.app.Application
+import androidx.room.Room
 import com.patofernandez.weatherapp.api.OpenWeatherService
+import com.patofernandez.weatherapp.db.FavoriteLocationDao
+import com.patofernandez.weatherapp.db.WeatherDb
+import com.patofernandez.weatherapp.utils.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -15,29 +20,24 @@ class AppModule {
         return Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/data/2.5/")
             .addConverterFactory(GsonConverterFactory.create())
-//            .addCallAdapterFactory(LiveDataCallAdapterFactory())
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(OpenWeatherService::class.java)
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideDb(app: Application): GithubDb {
-//        return Room
-//            .databaseBuilder(app, GithubDb::class.java, "github.db")
-//            .fallbackToDestructiveMigration()
-//            .build()
-//    }
-//
-//    @Singleton
-//    @Provides
-//    fun provideUserDao(db: GithubDb): UserDao {
-//        return db.userDao()
-//    }
-//
-//    @Singleton
-//    @Provides
-//    fun provideRepoDao(db: GithubDb): RepoDao {
-//        return db.repoDao()
-//    }
+    @Singleton
+    @Provides
+    fun provideDb(app: Application): WeatherDb {
+        return Room
+            .databaseBuilder(app, WeatherDb::class.java, "weather.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoriteLocationDao(db: WeatherDb): FavoriteLocationDao {
+        return db.favoriteLocationDao()
+    }
+
 }

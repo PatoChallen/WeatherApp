@@ -1,4 +1,4 @@
-package com.patofernandez.weatherapp.vo
+package com.patofernandez.weatherapp.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -28,7 +28,7 @@ data class CurrentWeatherApiResponse (
     @SerializedName("timezone")
     var timezone: Long = 0L,
     @SerializedName("id")
-    var id: Long = 0L,
+    var id: Int = 0,
     @SerializedName("name")
     var name: String = "",
     @SerializedName("cod")

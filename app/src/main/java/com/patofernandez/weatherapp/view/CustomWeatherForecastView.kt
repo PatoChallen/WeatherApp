@@ -6,8 +6,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.gson.Gson
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.adapters.WeatherForecastAdapter
-import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
-import com.patofernandez.weatherapp.vo.WeatherForecastApiResponse
+import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
 import com.patofernandez.weatherapp.utils.FormatUtils
 import kotlinx.android.synthetic.main.custom_weather_forecast.view.*
 

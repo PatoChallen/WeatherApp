@@ -1,190 +1,209 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:gravity="center"
-        android:textSize="22sp"
-        android:text="Seleccione la ubicacón en el mapa"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        <import type="com.patofernandez.weatherapp.vo.FavoriteLocation" />
+        <import type="com.patofernandez.weatherapp.utils.FormatUtils" />
+        <import type="com.patofernandez.weatherapp.vo.Resource" />
+        <import type="androidx.lifecycle.LiveData"/>
+
+        <variable
+            name="currentWeather"
+            type="FavoriteLocation" />
+
+        <variable
+            name="result"
+            type="com.patofernandez.weatherapp.vo.Resource" />
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:context=".MainActivity" />
+        android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.60" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:text="Seleccione la ubicacón en el mapa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardDetails"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:elevation="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline"
-        app:layout_constraintBottom_toTopOf="@id/btnConfirm" >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:context=".MainActivity" />
 
-            <TextView
-                android:id="@+id/city"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:text="Buenos Aires"
-                android:paddingTop="5dp"
-                android:textColor="@color/cityTitle"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
 
-            <TextView
-                android:id="@+id/temp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:letterSpacing="-0.05"
-                android:text="22º"
-                android:textSize="80sp"
-                app:layout_constraintBottom_toTopOf="@+id/latLng"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/city" />
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <TextView
-                android:id="@+id/tempMax"
-                style="@style/customItemText"
-                android:text="24º"
-                android:layout_marginStart="15dp"
-                android:textStyle="bold"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintBottom_toTopOf="@+id/tempMin"
-                app:layout_constraintStart_toEndOf="@+id/temp"
-                app:layout_constraintTop_toTopOf="@+id/temp" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardDetails"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:elevation="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline"
+            app:layout_constraintBottom_toTopOf="@id/btnConfirm" >
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_arrow_up"
-                app:layout_constraintBottom_toBottomOf="@+id/tempMax"
-                app:layout_constraintStart_toEndOf="@+id/tempMax"
-                app:layout_constraintTop_toTopOf="@+id/tempMax" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tempMin"
-                style="@style/customItemText"
-                android:text="19º"
-                android:layout_marginStart="15dp"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintTop_toBottomOf="@id/tempMax"
-                app:layout_constraintStart_toEndOf="@+id/temp"
-                app:layout_constraintBottom_toBottomOf="@+id/temp" />
+                <TextView
+                    android:id="@+id/city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:text="@{currentWeather.name}"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/cityTitle"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_arrow_down"
-                app:layout_constraintBottom_toBottomOf="@+id/tempMin"
-                app:layout_constraintStart_toEndOf="@+id/tempMin"
-                app:layout_constraintTop_toTopOf="@+id/tempMin" />
+                <TextView
+                    android:id="@+id/temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:letterSpacing="-0.05"
+                    android:text="@{currentWeather.temp}"
+                    android:textSize="80sp"
+                    app:layout_constraintBottom_toTopOf="@+id/latLng"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/city" />
 
-            <ImageView
-                android:id="@+id/imgWeather"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/clouds"
-                app:layout_constraintBottom_toBottomOf="@+id/temp"
-                app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/temp" />
+                <TextView
+                    android:id="@+id/tempMax"
+                    style="@style/customItemText"
+                    android:text="@{currentWeather.tempMax}"
+                    android:layout_marginStart="15dp"
+                    android:textStyle="bold"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintBottom_toTopOf="@+id/tempMin"
+                    app:layout_constraintStart_toEndOf="@+id/temp"
+                    app:layout_constraintTop_toTopOf="@+id/temp" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_location"
-                app:layout_constraintBottom_toBottomOf="@+id/latLng"
-                app:layout_constraintEnd_toStartOf="@+id/latLng"
-                app:layout_constraintTop_toTopOf="@+id/latLng" />
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_arrow_up"
+                    app:layout_constraintBottom_toBottomOf="@+id/tempMax"
+                    app:layout_constraintStart_toEndOf="@+id/tempMax"
+                    app:layout_constraintTop_toTopOf="@+id/tempMax" />
 
-            <TextView
-                android:id="@+id/latLng"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:padding="5dp"
-                android:text="37.42,-121.89"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/tempMin"
+                    style="@style/customItemText"
+                    android:text="@{currentWeather.tempMin}"
+                    android:layout_marginStart="15dp"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintTop_toBottomOf="@id/tempMax"
+                    app:layout_constraintStart_toEndOf="@+id/temp"
+                    app:layout_constraintBottom_toBottomOf="@+id/temp" />
 
-            <TextView
-                android:id="@+id/instructions"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:padding="15dp"
-                android:text="Empecemos!\n\nPrimero, seleccione una ubicación en el mapa\nLuego, confirme para agregarla a sus ubicaciones favoritas"
-                android:textSize="25sp"
-                android:background="@color/cardActive"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_arrow_down"
+                    app:layout_constraintBottom_toBottomOf="@+id/tempMin"
+                    app:layout_constraintStart_toEndOf="@+id/tempMin"
+                    app:layout_constraintTop_toTopOf="@+id/tempMin" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/imgWeather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:adjustViewBounds="true"
+                    app:imageUrl="@{currentWeather.iconUrl}"
+                    app:layout_constraintBottom_toBottomOf="@+id/temp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/temp" />
 
-    </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location"
+                    app:layout_constraintBottom_toBottomOf="@+id/latLng"
+                    app:layout_constraintEnd_toStartOf="@+id/latLng"
+                    app:layout_constraintTop_toTopOf="@+id/latLng" />
 
-    <Button
-        android:id="@+id/btnConfirm"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Agregar Ubicación"
-        android:layout_margin="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/latLng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:padding="5dp"
+                    android:text="@{currentWeather.coordinates}"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/instructions"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="15dp"
+                    app:visibility="@{currentWeather == null}"
+                    android:text="Empecemos!\n\nPrimero, seleccione una ubicación en el mapa\nLuego, confirme para agregarla a sus ubicaciones favoritas"
+                    android:textSize="25sp"
+                    android:background="@color/cardActive"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Agregar Ubicación"
+            android:enabled="@{currentWeather != null}"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

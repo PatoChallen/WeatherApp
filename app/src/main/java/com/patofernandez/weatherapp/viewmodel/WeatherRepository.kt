@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.patofernandez.weatherapp.AppExecutors
-import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
-import com.patofernandez.weatherapp.vo.WeatherForecastApiResponse
+import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
 import com.patofernandez.weatherapp.api.OpenWeatherService
 import com.patofernandez.weatherapp.services.RetrofitService.createService
 import com.patofernandez.weatherapp.utils.Preferences
@@ -17,20 +17,22 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.collections.ArrayList
 
-@Singleton
+//@Singleton
 //@OpenForTesting
-class WeatherRepository @Inject constructor(
-    private val appExecutors: AppExecutors,
+class WeatherRepository
+//@Inject constructor(
+//    private val appExecutors: AppExecutors,
 //    private val db: GithubDb,
 //    private val repoDao: RepoDao,
-    private val openWeatherService: OpenWeatherService
-) {
+//    private val openWeatherService: OpenWeatherService
+//)
+{
 
     private val favoriteLocations = MutableLiveData<List<CurrentWeatherApiResponse>>()
     private val selectedLocation = MutableLiveData<CurrentWeatherApiResponse>()
-//    private val openWeatherService: OpenWeatherService = createService(
-//        OpenWeatherService::class.java
-//    )
+    private val openWeatherService: OpenWeatherService = createService(
+        OpenWeatherService::class.java
+    )
 
     fun getSelectedLocation(): MutableLiveData<CurrentWeatherApiResponse> {
         return selectedLocation
@@ -108,13 +110,13 @@ class WeatherRepository @Inject constructor(
     }
 
     companion object {
-//        private var weatherRepository: WeatherRepository? = null
-//        fun getInstance(): WeatherRepository {
-//            if (weatherRepository == null) {
-//                weatherRepository = WeatherRepository()
-//            }
-//            return weatherRepository!!
-//        }
+        private var weatherRepository: WeatherRepository? = null
+        fun getInstance(): WeatherRepository {
+            if (weatherRepository == null) {
+                weatherRepository = WeatherRepository()
+            }
+            return weatherRepository!!
+        }
 
         const val TAG = "WeatherRepository"
         const val KEY = "4aacfcc02cb3fed3918e88987aaf6fc3"

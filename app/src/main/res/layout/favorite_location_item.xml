@@ -5,21 +5,14 @@
 
     <data>
         <variable
-            name="showFullName"
-            type="boolean" />
-
-        <variable
-            name="repo"
-            type="com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse" />
+            name="favoriteLocation"
+            type="com.patofernandez.weatherapp.vo.FavoriteLocation" />
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_margin="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,7 +26,7 @@
                 android:padding="5dp"
                 android:fontFamily="sans-serif-condensed-light"
                 android:textStyle="bold"
-                android:text="United States of America"
+                android:text="@{favoriteLocation.name}"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +50,7 @@
                 android:fontFamily="sans-serif-condensed-light"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/favTitle"
-                android:text="16º"
+                android:text="@{favoriteLocation.temp}"
                 android:textSize="50sp"
                 android:letterSpacing="-0.1" />
 
@@ -66,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
+                app:imageUrl="@{favoriteLocation.iconUrl}"
                 android:src="@drawable/clouds"
                 app:layout_constraintTop_toTopOf="@id/temp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +70,7 @@
                 style="@style/customText"
                 android:layout_marginStart="6dp"
                 android:textSize="15sp"
-                android:text="32º"
+                android:text="@{favoriteLocation.tempMax}"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintBottom_toTopOf="@id/tempMin"
                 app:layout_constraintStart_toEndOf="@+id/temp"
@@ -96,7 +90,7 @@
                 style="@style/customText"
                 android:layout_marginStart="6dp"
                 android:textSize="15sp"
-                android:text="20º"
+                android:text="@{favoriteLocation.tempMin}"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/temp"
                 app:layout_constraintTop_toBottomOf="@+id/tempMax"

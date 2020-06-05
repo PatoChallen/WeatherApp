@@ -1,10 +1,7 @@
 package com.patofernandez.weatherapp.repository
 
-import androidx.lifecycle.LiveData
-import com.google.android.gms.maps.model.LatLng
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.api.OpenWeatherService
-import com.patofernandez.weatherapp.vo.Resource
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,13 +1,9 @@
 package com.patofernandez.weatherapp.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.patofernandez.weatherapp.repository.LocationRepository
-import com.patofernandez.weatherapp.utils.AbsentLiveData
-import com.patofernandez.weatherapp.vo.*
 import javax.inject.Inject
 
 //@Target(AnnotationTarget.ANNOTATION_CLASS)

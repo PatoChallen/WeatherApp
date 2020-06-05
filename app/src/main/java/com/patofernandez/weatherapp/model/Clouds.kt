@@ -1,4 +1,4 @@
-package com.patofernandez.weatherapp.vo
+package com.patofernandez.weatherapp.model
 
 import com.google.gson.annotations.SerializedName
 

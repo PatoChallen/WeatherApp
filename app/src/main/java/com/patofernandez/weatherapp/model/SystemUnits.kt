@@ -1,4 +1,4 @@
-package com.patofernandez.weatherapp.vo
+package com.patofernandez.weatherapp.model
 
 enum class SystemUnits {
     metric,

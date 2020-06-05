@@ -9,25 +9,24 @@ import com.patofernandez.weatherapp.databinding.FavoriteLocationItemBinding
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.ui.common.DataBoundListAdapter
-import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.vo.FavoriteLocation
 
 /**
- * A RecyclerView adapter for [CurrentWeatherApiResponse] class.
+ * A RecyclerView adapter for [FavoriteLocation] class.
  */
 class FavoriteLocationsAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
-    private val showFullName: Boolean,
-    private val repoClickCallback: ((CurrentWeatherApiResponse) -> Unit)?
-) : DataBoundListAdapter<CurrentWeatherApiResponse, FavoriteLocationItemBinding>(
+    private val repoClickCallback: ((FavoriteLocation) -> Unit)?
+) : DataBoundListAdapter<FavoriteLocation, FavoriteLocationItemBinding>(
     appExecutors = appExecutors,
-    diffCallback = object : DiffUtil.ItemCallback<CurrentWeatherApiResponse>() {
-        override fun areItemsTheSame(oldItem: CurrentWeatherApiResponse, newItem: CurrentWeatherApiResponse): Boolean {
+    diffCallback = object : DiffUtil.ItemCallback<FavoriteLocation>() {
+        override fun areItemsTheSame(oldItem: FavoriteLocation, newItem: FavoriteLocation): Boolean {
             return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: CurrentWeatherApiResponse, newItem: CurrentWeatherApiResponse): Boolean {
-            return false // oldItem.description == newItem.description && oldItem.stars == newItem.stars
+        override fun areContentsTheSame(oldItem: FavoriteLocation, newItem: FavoriteLocation): Boolean {
+            return oldItem.coordinates == newItem.coordinates
         }
     }
 ) {
@@ -40,16 +39,15 @@ class FavoriteLocationsAdapter(
             false,
             dataBindingComponent
         )
-        binding.showFullName = showFullName
         binding.root.setOnClickListener {
-            binding.repo?.let {
+            binding.favoriteLocation?.let {
                 repoClickCallback?.invoke(it)
             }
         }
         return binding
     }
 
-    override fun bind(binding: FavoriteLocationItemBinding, item: CurrentWeatherApiResponse) {
-        binding.repo = item
+    override fun bind(binding: FavoriteLocationItemBinding, item: FavoriteLocation) {
+        binding.favoriteLocation = item
     }
 }

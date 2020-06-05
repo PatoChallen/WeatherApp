@@ -1,23 +1,21 @@
 package com.patofernandez.weatherapp.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.patofernandez.weatherapp.AppExecutors
+import com.patofernandez.weatherapp.api.ApiEmptyResponse
+import com.patofernandez.weatherapp.api.ApiErrorResponse
+import com.patofernandez.weatherapp.api.ApiSuccessResponse
 import com.patofernandez.weatherapp.api.OpenWeatherService
-import com.patofernandez.weatherapp.utils.Preferences
-import com.patofernandez.weatherapp.viewmodel.WeatherRepository
-import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.db.FavoriteLocationDao
+import com.patofernandez.weatherapp.db.WeatherDb
+import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.vo.FavoriteLocation
 import com.patofernandez.weatherapp.vo.Resource
-import com.patofernandez.weatherapp.vo.WeatherForecastApiResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.ArrayList
 
 /**
  * Repository that handles Repo instances.
@@ -30,47 +28,59 @@ import kotlin.collections.ArrayList
 //@OpenForTesting
 class WeatherRepository @Inject constructor(
     private val appExecutors: AppExecutors,
-//    private val db: GithubDb,
-//    private val repoDao: RepoDao,
+    private val db: WeatherDb,
+    private val favoriteLocationDao: FavoriteLocationDao,
     private val openWeatherService: OpenWeatherService
 ) {
+    private val result = MediatorLiveData<Resource<List<FavoriteLocation>>>()
 
-    fun getFavoriteLocations(): LiveData<Resource<List<CurrentWeatherApiResponse>>> {
-        TODO("Not yet implemented")
+    fun loadFavoriteLocations(): LiveData<Resource<List<FavoriteLocation>>> {
+        result.value = Resource.loading(null)
+        val dbSource = favoriteLocationDao.load()
+        result.addSource(dbSource) { data ->
+            result.removeSource(dbSource)
+            result.value = Resource.success(data)
+        }
+        return result
     }
 
-    fun loadFavoriteLocations(): LiveData<Resource<List<CurrentWeatherApiResponse>>> {
-        return object : NetworkBoundResource<List<CurrentWeatherApiResponse>, List<CurrentWeatherApiResponse>>(appExecutors) {
-            override fun saveCallResult(item: List<CurrentWeatherApiResponse>) {
-                item.forEach {
-                    it.repoName = name
-                    it.repoOwner = owner
+    fun getCurrentWeatherByLocation(latLng: LatLng): LiveData<Resource<CurrentWeatherApiResponse>> {
+        val result = MediatorLiveData<Resource<CurrentWeatherApiResponse>>()
+        val lang = Locale.getDefault().language
+        result.value = Resource.loading(null)
+        val apiResponse = openWeatherService.getCurrentWeatherByCoords2(
+            lat = latLng.latitude,
+            lon = latLng.longitude,
+            lang = lang,
+            appid = KEY
+        )
+        result.addSource(apiResponse) {  response ->
+            result.removeSource(apiResponse)
+            when (response) {
+                is ApiSuccessResponse -> {
+                    result.value = Resource.success(response.body)
                 }
-                db.runInTransaction {
-                    repoDao.createRepoIfNotExists(
-                        Repo(
-                            id = Repo.UNKNOWN_ID,
-                            name = name,
-                            fullName = "$owner/$name",
-                            description = "",
-                            owner = Repo.Owner(owner, null),
-                            stars = 0
-                        )
-                    )
-                    repoDao.insertContributors(item)
+                is ApiEmptyResponse -> {
+                    result.value = Resource.success(null)
+                }
+                is ApiErrorResponse -> {
+                    result.value = Resource.error(response.errorMessage, null)
                 }
             }
-
-            override fun shouldFetch(data: List<CurrentWeatherApiResponse>?): Boolean {
-                return data == null || data.isEmpty()
-            }
-
-            override fun loadFromDb() = repoDao.loadContributors(owner, name)
-
-            override fun createCall() = githubService.getContributors(owner, name)
-        }.asLiveData()
+        }
+        return result
     }
 
+    fun addSelectedLocationToFavorites(favoriteLocation: FavoriteLocation) {
+        appExecutors.diskIO().execute {
+            db.runInTransaction{
+                favoriteLocationDao.insert(favoriteLocation)
+                appExecutors.mainThread().execute {
+                    loadFavoriteLocations()
+                }
+            }
+        }
+    }
 
     companion object {
         const val TAG = "WeatherRepository"

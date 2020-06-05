@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse" />
+        <import type="com.patofernandez.weatherapp.vo.FavoriteLocation" />
 
         <import type="java.util.List" />
 
@@ -13,21 +13,11 @@
 
         <import type="com.patofernandez.weatherapp.vo.Resource" />
         <import type="androidx.lifecycle.LiveData"/>
-        <variable
-            name="query"
-            type="LiveData&lt;String>" />
 
         <variable
-            name="loadingMore"
-            type="boolean" />
+            name="result"
+            type="LiveData&lt;Resource&lt;List&lt;FavoriteLocation>>>" />
 
-        <variable
-            name="searchResult"
-            type="LiveData&lt;Resource<List&lt;CurrentWeatherApiResponse>>>" />
-
-        <variable
-            name="callback"
-            type="com.patofernandez.weatherapp.ui.common.RetryCallback" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toggle"
@@ -99,7 +89,7 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnPreferences"
+            android:id="@+id/btnAddLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"

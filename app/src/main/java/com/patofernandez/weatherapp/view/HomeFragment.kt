@@ -16,14 +16,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.adapters.FavoriteLocationsAdapter
 import com.patofernandez.weatherapp.di.Injectable
-import com.patofernandez.weatherapp.vo.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
 
 class HomeFragment : Fragment(), Injectable {
 
     private lateinit var viewModel: WeatherViewModel
 
-    @BindView(R.id.btnPreferences) lateinit var btnSelectLocation: FloatingActionButton
+    @BindView(R.id.btnAddLocation) lateinit var btnSelectLocation: FloatingActionButton
     @BindView(R.id.favoriteLocations) lateinit var mFavoriteLocations: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
