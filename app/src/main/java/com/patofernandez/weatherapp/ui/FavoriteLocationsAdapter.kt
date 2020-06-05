@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.patofernandez.weatherapp.databinding.FavoriteLocationItemBinding
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
+import com.patofernandez.weatherapp.adapters.FavoriteLocationsAdapter
 import com.patofernandez.weatherapp.ui.common.DataBoundListAdapter
 import com.patofernandez.weatherapp.vo.FavoriteLocation
 
@@ -17,7 +18,7 @@ import com.patofernandez.weatherapp.vo.FavoriteLocation
 class FavoriteLocationsAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
-    private val repoClickCallback: ((FavoriteLocation) -> Unit)?
+    private val onFavoriteActionListener: OnFavoriteActionListener
 ) : DataBoundListAdapter<FavoriteLocation, FavoriteLocationItemBinding>(
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<FavoriteLocation>() {
@@ -40,8 +41,13 @@ class FavoriteLocationsAdapter(
             dataBindingComponent
         )
         binding.root.setOnClickListener {
-            binding.favoriteLocation?.let {
-                repoClickCallback?.invoke(it)
+            binding.favoriteLocation?.let { favoriteLocation ->
+                onFavoriteActionListener.onFavoriteLocationClick(favoriteLocation)
+            }
+        }
+        binding.delete.setOnClickListener {
+            binding.favoriteLocation?.let { favoriteLocation ->
+                onFavoriteActionListener.onFavoriteLocationDelete(favoriteLocation)
             }
         }
         return binding
@@ -49,5 +55,10 @@ class FavoriteLocationsAdapter(
 
     override fun bind(binding: FavoriteLocationItemBinding, item: FavoriteLocation) {
         binding.favoriteLocation = item
+    }
+
+    interface OnFavoriteActionListener {
+        fun onFavoriteLocationClick(favoriteLocation: FavoriteLocation)
+        fun onFavoriteLocationDelete(favoriteLocation: FavoriteLocation)
     }
 }

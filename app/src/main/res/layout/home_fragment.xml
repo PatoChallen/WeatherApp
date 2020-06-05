@@ -15,6 +15,10 @@
         <import type="androidx.lifecycle.LiveData"/>
 
         <variable
+            name="currentLocation"
+            type="FavoriteLocation" />
+
+        <variable
             name="result"
             type="LiveData&lt;Resource&lt;List&lt;FavoriteLocation>>>" />
 
@@ -45,7 +49,7 @@
                     android:fontFamily="sans-serif-condensed-light"
                     android:textStyle="bold"
                     android:textColor="@color/textColor"
-                    android:text="United States of America"
+                    android:text="@{currentLocation.name}"
                     android:textSize="25sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -60,7 +64,7 @@
                     android:fontFamily="sans-serif-condensed-light"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/favTitle"
-                    android:text="16º"
+                    android:text="@{currentLocation.temp}"
                     android:textSize="90sp"
                     android:letterSpacing="-0.1" />
 
@@ -68,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/clouds"
+                    app:imageUrl="@{currentLocation.iconUrl}"
                     app:layout_constraintStart_toEndOf="@id/temp"
                     app:layout_constraintTop_toTopOf="@id/temp"
                     app:layout_constraintBottom_toBottomOf="@id/temp"/>

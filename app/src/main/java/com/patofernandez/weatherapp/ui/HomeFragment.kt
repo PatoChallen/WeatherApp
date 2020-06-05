@@ -1,6 +1,7 @@
 package com.patofernandez.weatherapp.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
 import com.patofernandez.weatherapp.AppExecutors
+import com.patofernandez.weatherapp.MainActivity
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.binding.FragmentDataBindingComponent
 import com.patofernandez.weatherapp.databinding.HomeFragmentBinding
 import com.patofernandez.weatherapp.di.Injectable
 import com.patofernandez.weatherapp.ui.common.RetryCallback
 import com.patofernandez.weatherapp.utils.autoCleared
+import com.patofernandez.weatherapp.vo.FavoriteLocation
+import com.patofernandez.weatherapp.vo.Status
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), Injectable {
@@ -58,21 +65,46 @@ class HomeFragment : Fragment(), Injectable {
         initRecyclerView()
         val rvAdapter = FavoriteLocationsAdapter(
             dataBindingComponent = dataBindingComponent,
-            appExecutors = appExecutors
-        ) {
-            findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
-        }
+            appExecutors = appExecutors,
+            onFavoriteActionListener = object : FavoriteLocationsAdapter.OnFavoriteActionListener {
+                override fun onFavoriteLocationClick(favoriteLocation: FavoriteLocation) {
+                    weatherViewModel.setLatLng(favoriteLocation.latLng)
+                    findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
+                }
+
+                override fun onFavoriteLocationDelete(favoriteLocation: FavoriteLocation) {
+                    weatherViewModel.removeLocationFromFavorites(favoriteLocation)
+                }
+            }
+        )
+
         binding.favoriteLocations.adapter = rvAdapter
+        adapter = rvAdapter
         binding.btnAddLocation.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_selectLocationFragment)
         }
-        adapter = rvAdapter
-
+        binding.myLocation.setOnClickListener {
+            weatherViewModel.setLatLng()
+            findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
+        }
+        weatherViewModel.currentLocation.observe(viewLifecycleOwner, Observer { result ->
+            Log.e(SelectLocationFragment.TAG, Gson().toJson(result))
+            if (result.status == Status.SUCCESS){
+                binding.currentLocation = result.data
+            }
+        })
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationClient.lastLocation.apply {
+            addOnSuccessListener { location ->
+                weatherViewModel.setMyLatLng(LatLng(location.latitude, location.longitude))
+            }
+        }
     }
 
     private fun initRecyclerView() {
         binding.result = weatherViewModel.results
         weatherViewModel.results.observe(viewLifecycleOwner, Observer { result ->
+            Log.e(TAG, Gson().toJson(result))
             adapter.submitList(result?.data)
         })
 

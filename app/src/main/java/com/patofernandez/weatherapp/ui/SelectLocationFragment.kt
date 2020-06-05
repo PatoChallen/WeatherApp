@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
-import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.binding.FragmentDataBindingComponent
 import com.patofernandez.weatherapp.databinding.SelectLocationFragmentBinding
@@ -35,9 +34,6 @@ class SelectLocationFragment : Fragment(), OnMapReadyCallback, Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var appExecutors: AppExecutors
 
     private var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 

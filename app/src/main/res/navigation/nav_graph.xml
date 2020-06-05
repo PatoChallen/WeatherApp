@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/locationWeatherFragment"
-        android:name="com.patofernandez.weatherapp.view.LocationWeatherFragment"
+        android:name="com.patofernandez.weatherapp.ui.LocationWeatherFragment"
         android:label="LocationWeatherFragment"
         tools:layout="@layout/location_weather_fragment" />
     <fragment

@@ -82,6 +82,17 @@ class WeatherRepository @Inject constructor(
         }
     }
 
+    fun removeLocationFromFavorites(favoriteLocation: FavoriteLocation) {
+        appExecutors.diskIO().execute {
+            db.runInTransaction{
+                favoriteLocationDao.delete(favoriteLocation)
+                appExecutors.mainThread().execute {
+                    loadFavoriteLocations()
+                }
+            }
+        }
+    }
+
     companion object {
         const val TAG = "WeatherRepository"
         const val KEY = "4aacfcc02cb3fed3918e88987aaf6fc3"

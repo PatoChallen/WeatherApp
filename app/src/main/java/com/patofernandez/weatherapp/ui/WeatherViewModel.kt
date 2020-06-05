@@ -18,15 +18,7 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
     val latLng: LiveData<LatLng?> = _latLng
     val results: LiveData<Resource<List<FavoriteLocation>>> = weatherRepository.loadFavoriteLocations()
 
-    val currentLocation: LiveData<Resource<CurrentWeatherApiResponse>> = _myLatLng.switchMap { latLng ->
-        if (latLng == null) {
-            AbsentLiveData.create()
-        } else {
-            weatherRepository.getCurrentWeatherByLocation(latLng)
-        }
-    }
-
-    val selectedLocation: LiveData<Resource<FavoriteLocation>> = _latLng.switchMap { latLng ->
+    val currentLocation: LiveData<Resource<FavoriteLocation>> = _myLatLng.switchMap { latLng ->
         if (latLng == null) {
             AbsentLiveData.create()
         } else {
@@ -36,7 +28,7 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
                     message = resource.message,
                     data = resource.data?.let {
                         FavoriteLocation(
-                            id = -1,
+                            id = null,
                             name = it.name,
                             temp = it.main?.temp?.let {
                                 FormatUtils.formatedKelvinToCelsius(
@@ -59,6 +51,48 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
                             country = it.sys?.country
                         ).apply {
                             coordinates = "$lat, $lng"
+                            this.latLng = latLng
+                        }
+                    }
+                )
+            }
+        }
+    }
+
+    val selectedLocation: LiveData<Resource<FavoriteLocation>> = _latLng.switchMap { latLng ->
+        if (latLng == null) {
+            AbsentLiveData.create()
+        } else {
+            weatherRepository.getCurrentWeatherByLocation(latLng).map { resource ->
+                Resource<FavoriteLocation>(
+                    status = resource.status,
+                    message = resource.message,
+                    data = resource.data?.let {
+                        FavoriteLocation(
+                            id = null,
+                            name = it.name,
+                            temp = it.main?.temp?.let {
+                                FormatUtils.formatedKelvinToCelsius(
+                                    it
+                                )
+                            },
+                            tempMax = it.main?.tempMax?.let {
+                                FormatUtils.formatedKelvinToCelsius(
+                                    it
+                                )
+                            },
+                            tempMin = it.main?.tempMin?.let {
+                                FormatUtils.formatedKelvinToCelsius(
+                                    it
+                                )
+                            },
+                            lat = it.coordinates?.latitude?.toString(),
+                            lng = it.coordinates?.longitude?.toString(),
+                            iconUrl = "https://openweathermap.org/img/wn/${it.weather.first()?.icon}@4x.png",
+                            country = it.sys?.country
+                        ).apply {
+                            coordinates = "$lat, $lng"
+                            this.latLng = latLng
                         }
                     }
                 )
@@ -78,6 +112,12 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
         }
     }
 
+    fun setLatLng() {
+        if (_latLng.value != _myLatLng.value) {
+            _latLng.value = _myLatLng.value
+        }
+    }
+
     fun retry() {
         _myLatLng.value?.let {
             _myLatLng.value = it
@@ -86,6 +126,10 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
 
     fun addSelectedLocationToFavorites() {
         weatherRepository.addSelectedLocationToFavorites(selectedLocation.value?.data!!)
+    }
+
+    fun removeLocationFromFavorites(favoriteLocation: FavoriteLocation) {
+        weatherRepository.removeLocationFromFavorites(favoriteLocation)
     }
 
 

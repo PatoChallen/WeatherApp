@@ -2,15 +2,18 @@ package com.patofernandez.weatherapp.vo
 
 import androidx.room.Entity
 import androidx.room.Index
+import androidx.room.PrimaryKey
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 @Entity(
     indices = [
-        Index("id")],
-    primaryKeys = ["name"]
+        Index("id")
+    ]
 )
 data class FavoriteLocation (
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int?,
     @field:SerializedName("name")
     val name: String,
     @field:SerializedName("country")
@@ -29,4 +32,5 @@ data class FavoriteLocation (
     val lng: String?
 ){
     lateinit var coordinates: String
+    lateinit var latLng: LatLng
 }

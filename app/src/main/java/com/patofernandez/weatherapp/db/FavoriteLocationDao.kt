@@ -1,15 +1,9 @@
 package com.patofernandez.weatherapp.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.patofernandez.weatherapp.vo.FavoriteLocation
 
-/**
- * Interface for database access for User related operations.
- */
 @Dao
 interface FavoriteLocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -20,4 +14,7 @@ interface FavoriteLocationDao {
 
     @Query("SELECT * FROM favoritelocation")
     fun load(): LiveData<List<FavoriteLocation>>
+
+    @Delete
+    fun delete(favoriteLocation: FavoriteLocation)
 }
