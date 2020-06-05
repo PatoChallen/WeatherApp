@@ -16,12 +16,10 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.patofernandez.weatherapp.AppExecutors
-import com.patofernandez.weatherapp.MainActivity
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.binding.FragmentDataBindingComponent
 import com.patofernandez.weatherapp.databinding.HomeFragmentBinding
 import com.patofernandez.weatherapp.di.Injectable
-import com.patofernandez.weatherapp.ui.common.RetryCallback
 import com.patofernandez.weatherapp.utils.autoCleared
 import com.patofernandez.weatherapp.vo.FavoriteLocation
 import com.patofernandez.weatherapp.vo.Status
@@ -63,12 +61,12 @@ class HomeFragment : Fragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.lifecycleOwner = viewLifecycleOwner
         initRecyclerView()
-        val rvAdapter = FavoriteLocationsAdapter(
+        val favoriteLocationsAdapter = FavoriteLocationsAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors,
             onFavoriteActionListener = object : FavoriteLocationsAdapter.OnFavoriteActionListener {
                 override fun onFavoriteLocationClick(favoriteLocation: FavoriteLocation) {
-                    weatherViewModel.setLatLng(favoriteLocation.latLng)
+                    weatherViewModel.setLatLng(LatLng(favoriteLocation.lat, favoriteLocation.lng))
                     findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
                 }
 
@@ -78,8 +76,8 @@ class HomeFragment : Fragment(), Injectable {
             }
         )
 
-        binding.favoriteLocations.adapter = rvAdapter
-        adapter = rvAdapter
+        binding.favoriteLocations.adapter = favoriteLocationsAdapter
+        adapter = favoriteLocationsAdapter
         binding.btnAddLocation.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_selectLocationFragment)
         }

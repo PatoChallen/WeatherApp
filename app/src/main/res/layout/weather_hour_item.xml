@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <data>
+        <variable
+            name="weatherByHour"
+            type="com.patofernandez.weatherapp.vo.FavoriteLocation" />
+    </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1px"
         android:layout_marginTop="1px"
@@ -26,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:textColor="@color/textColor"
-                android:text="Lunes 5"
+                android:text="@{weatherByHour.temp}"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +41,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/clouds"
+                app:imageUrl="@{weatherByHour.iconUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:textColor="@color/textColor"
-                android:text="18 º"
+                android:text="@{weatherByHour.tempMax}"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
                 android:layout_marginEnd="16dp"
-                android:text="10 º"
+                android:text="@{weatherByHour.tempMin}"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -85,4 +89,4 @@
 
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

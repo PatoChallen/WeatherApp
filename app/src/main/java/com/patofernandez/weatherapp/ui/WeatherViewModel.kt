@@ -3,7 +3,7 @@ package com.patofernandez.weatherapp.ui
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.patofernandez.weatherapp.repository.WeatherRepository
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
 import com.patofernandez.weatherapp.utils.AbsentLiveData
 import com.patofernandez.weatherapp.utils.FormatUtils
 import com.patofernandez.weatherapp.vo.FavoriteLocation
@@ -14,6 +14,7 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
 
     private val _myLatLng = MutableLiveData<LatLng?>()
     private val _latLng = MutableLiveData<LatLng?>()
+    private val _date = MutableLiveData<Long>()
 
     val latLng: LiveData<LatLng?> = _latLng
     val results: LiveData<Resource<List<FavoriteLocation>>> = weatherRepository.loadFavoriteLocations()
@@ -45,13 +46,12 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
                                     it
                                 )
                             },
-                            lat = it.coordinates?.latitude?.toString(),
-                            lng = it.coordinates?.longitude?.toString(),
+                            lat = it.coordinates?.latitude!!,
+                            lng = it.coordinates?.longitude!!,
                             iconUrl = "https://openweathermap.org/img/wn/${it.weather.first()?.icon}@4x.png",
                             country = it.sys?.country
                         ).apply {
                             coordinates = "$lat, $lng"
-                            this.latLng = latLng
                         }
                     }
                 )
@@ -86,15 +86,58 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
                                     it
                                 )
                             },
-                            lat = it.coordinates?.latitude?.toString(),
-                            lng = it.coordinates?.longitude?.toString(),
+                            lat = it.coordinates?.latitude!!,
+                            lng = it.coordinates?.longitude!!,
                             iconUrl = "https://openweathermap.org/img/wn/${it.weather.first()?.icon}@4x.png",
                             country = it.sys?.country
                         ).apply {
                             coordinates = "$lat, $lng"
-                            this.latLng = latLng
                         }
                     }
+                )
+            }
+        }
+    }
+
+    val currentWeatherForecast: LiveData<Resource<WeatherForecastApiResponse>> = weatherRepository.getForecastWeatherByLocation(_latLng.value)
+
+    val wheaterHoursByDay: LiveData<Resource<List<FavoriteLocation>>> = _date.switchMap { date ->
+        if (date == null) {
+            AbsentLiveData.create()
+        } else {
+            currentWeatherForecast.map { resource ->
+                Resource<List<FavoriteLocation>>(
+                    status = resource.status,
+                    message = resource.message,
+                    data = resource.data!!.list
+                        .filter { FormatUtils.formatedDay(it.date) == FormatUtils.formatedDay(date) }
+                        .map{
+                            FavoriteLocation(
+                                id = null,
+                                name = it.name,
+                                temp = it.main?.temp?.let {
+                                    FormatUtils.formatedKelvinToCelsius(
+                                        it
+                                    )
+                                },
+                                tempMax = it.main?.tempMax?.let {
+                                    FormatUtils.formatedKelvinToCelsius(
+                                        it
+                                    )
+                                },
+                                tempMin = it.main?.tempMin?.let {
+                                    FormatUtils.formatedKelvinToCelsius(
+                                        it
+                                    )
+                                },
+                                lat = it.coordinates?.latitude!!,
+                                lng = it.coordinates?.longitude!!,
+                                iconUrl = "https://openweathermap.org/img/wn/${it.weather.first()?.icon}@4x.png",
+                                country = it.sys?.country
+                            ).apply {
+                                coordinates = "$lat, $lng"
+                            }
+                        }
                 )
             }
         }

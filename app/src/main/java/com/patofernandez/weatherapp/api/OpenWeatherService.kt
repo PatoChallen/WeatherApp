@@ -16,18 +16,12 @@ interface OpenWeatherService {
     fun getCurrentWeatherByCoords(@Query("lat") lat: Double,
                                   @Query("lon") lon: Double,
                                   @Query("lang") lang: String,
-                                  @Query("appid") appid: String): Call<CurrentWeatherApiResponse>
-
-    @GET("weather")
-    fun getCurrentWeatherByCoords2(@Query("lat") lat: Double,
-                                  @Query("lon") lon: Double,
-                                  @Query("lang") lang: String,
                                   @Query("appid") appid: String): LiveData<ApiResponse<CurrentWeatherApiResponse>>
 
     @GET("forecast")
     fun getWeatherForecastByCoords(@Query("lat") lat: Double,
                                    @Query("lon") lon: Double,
                                    @Query("lang") lang: String,
-                                   @Query("appid") appid: String): Call<WeatherForecastApiResponse>
+                                   @Query("appid") appid: String):LiveData<ApiResponse<WeatherForecastApiResponse>>
 
 }

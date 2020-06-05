@@ -27,10 +27,9 @@ data class FavoriteLocation (
     @field:SerializedName("iconUrl")
     val iconUrl: String?,
     @field:SerializedName("lat")
-    val lat: String?,
+    val lat: Double = .0,
     @field:SerializedName("lng")
-    val lng: String?
+    val lng: Double = .0
 ){
     lateinit var coordinates: String
-    lateinit var latLng: LatLng
 }

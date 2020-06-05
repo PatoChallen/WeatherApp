@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,10 +21,10 @@ import com.google.gson.Gson
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.binding.FragmentDataBindingComponent
-import com.patofernandez.weatherapp.databinding.SelectLocationFragmentBinding
+import com.patofernandez.weatherapp.databinding.LocationWeatherFragmentBinding
 import com.patofernandez.weatherapp.di.Injectable
 import com.patofernandez.weatherapp.utils.autoCleared
-import com.patofernandez.weatherapp.vo.FavoriteLocation
+import com.patofernandez.weatherapp.vo.Status
 import javax.inject.Inject
 
 class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
@@ -40,9 +39,9 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
 
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
-    var binding by autoCleared<SelectLocationFragmentBinding>()
+    var binding by autoCleared<LocationWeatherFragmentBinding>()
 
-    var adapter by autoCleared<FavoriteLocationsAdapter>()
+    var adapter by autoCleared<WeatherHoursAdapter>()
 
     val weatherViewModel: WeatherViewModel by viewModels {
         viewModelFactory
@@ -68,31 +67,25 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.lifecycleOwner = viewLifecycleOwner
         initRecyclerView()
-        val rvAdapter = FavoriteLocationsAdapter(
+        val weatherHoursAdapter = WeatherHoursAdapter(
             dataBindingComponent = dataBindingComponent,
-            appExecutors = appExecutors,
-            onFavoriteActionListener = object : FavoriteLocationsAdapter.OnFavoriteActionListener {
-                override fun onFavoriteLocationClick(favoriteLocation: FavoriteLocation) {
-                    weatherViewModel.setLatLng(favoriteLocation.latLng)
-                    findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
-                }
-
-                override fun onFavoriteLocationDelete(favoriteLocation: FavoriteLocation) {
-                    weatherViewModel.removeLocationFromFavorites(favoriteLocation)
-                }
-            }
+            appExecutors = appExecutors
         )
 
-//        binding.favoriteLocations.adapter = rvAdapter
-        adapter = rvAdapter
+        binding.weatherHours.adapter = weatherHoursAdapter
+        adapter = weatherHoursAdapter
 
     }
 
     private fun initRecyclerView() {
-//        binding.result = weatherViewModel.results
-        weatherViewModel.results.observe(viewLifecycleOwner, Observer { result ->
-            Log.e(HomeFragment.TAG, Gson().toJson(result))
-            adapter.submitList(result?.data)
+        binding.result = weatherViewModel.currentWeatherForecast
+        weatherViewModel.currentWeatherForecast.observe(viewLifecycleOwner, Observer { result ->
+        })
+        weatherViewModel.wheaterHoursByDay.observe(viewLifecycleOwner, Observer { result ->
+            if (result.status == Status.SUCCESS){
+                adapter.submitList(result?.data)
+            }
+
         })
 
     }

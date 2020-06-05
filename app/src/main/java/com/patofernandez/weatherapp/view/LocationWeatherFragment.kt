@@ -40,7 +40,7 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
     @BindView(R.id.pressure) lateinit var mPressure :TextView
     @BindView(R.id.sunrise) lateinit var mSunrise :TextView
     @BindView(R.id.sunset) lateinit var mSunset :TextView
-    @BindView(R.id.weathweHours) lateinit var weathweHours :RecyclerView
+    @BindView(R.id.weatherHours) lateinit var weathweHours :RecyclerView
     @BindView(R.id.customForecast) lateinit var mCustomForecast :CustomWeatherForecastView
 
     private lateinit var viewModel: WeatherViewModel

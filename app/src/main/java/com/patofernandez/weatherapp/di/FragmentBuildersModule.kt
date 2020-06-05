@@ -1,7 +1,7 @@
 package com.patofernandez.weatherapp.di
 
 import com.patofernandez.weatherapp.ui.HomeFragment
-import com.patofernandez.weatherapp.view.LocationWeatherFragment
+import com.patofernandez.weatherapp.ui.LocationWeatherFragment
 import com.patofernandez.weatherapp.ui.SelectLocationFragment
 
 import dagger.Module

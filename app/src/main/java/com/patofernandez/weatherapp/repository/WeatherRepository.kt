@@ -11,6 +11,7 @@ import com.patofernandez.weatherapp.api.OpenWeatherService
 import com.patofernandez.weatherapp.db.FavoriteLocationDao
 import com.patofernandez.weatherapp.db.WeatherDb
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
+import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
 import com.patofernandez.weatherapp.vo.FavoriteLocation
 import com.patofernandez.weatherapp.vo.Resource
 import java.util.*
@@ -48,7 +49,7 @@ class WeatherRepository @Inject constructor(
         val result = MediatorLiveData<Resource<CurrentWeatherApiResponse>>()
         val lang = Locale.getDefault().language
         result.value = Resource.loading(null)
-        val apiResponse = openWeatherService.getCurrentWeatherByCoords2(
+        val apiResponse = openWeatherService.getCurrentWeatherByCoords(
             lat = latLng.latitude,
             lon = latLng.longitude,
             lang = lang,
@@ -65,6 +66,35 @@ class WeatherRepository @Inject constructor(
                 }
                 is ApiErrorResponse -> {
                     result.value = Resource.error(response.errorMessage, null)
+                }
+            }
+        }
+        return result
+    }
+
+    fun getForecastWeatherByLocation(latLng: LatLng?): LiveData<Resource<WeatherForecastApiResponse>> {
+        val result = MediatorLiveData<Resource<WeatherForecastApiResponse>>()
+        val lang = Locale.getDefault().language
+        result.value = Resource.loading(null)
+        latLng?.let {
+            val apiResponse = openWeatherService.getWeatherForecastByCoords(
+                lat = latLng.latitude,
+                lon = latLng.longitude,
+                lang = lang,
+                appid = KEY
+            )
+            result.addSource(apiResponse) { response ->
+                result.removeSource(apiResponse)
+                when (response) {
+                    is ApiSuccessResponse -> {
+                        result.value = Resource.success(response.body)
+                    }
+                    is ApiEmptyResponse -> {
+                        result.value = Resource.success(null)
+                    }
+                    is ApiErrorResponse -> {
+                        result.value = Resource.error(response.errorMessage, null)
+                    }
                 }
             }
         }

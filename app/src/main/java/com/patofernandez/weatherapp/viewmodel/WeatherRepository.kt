@@ -40,44 +40,44 @@ class WeatherRepository
 
     fun setCoordinates(lat: Double, lon: Double) {
         val lang = Locale.getDefault().language
-        openWeatherService.getCurrentWeatherByCoords(lat, lon, lang, KEY).enqueue(object : Callback<CurrentWeatherApiResponse>{
-            override fun onResponse(call: Call<CurrentWeatherApiResponse>, response: Response<CurrentWeatherApiResponse>) {
-                selectedLocation.value = response.body()
-            }
-            override fun onFailure(call: Call<CurrentWeatherApiResponse>, t: Throwable) {
-                Log.e(TAG, t.message.toString())
-                selectedLocation.value = null
-            }
-        })
+//        openWeatherService.getCurrentWeatherByCoords(lat, lon, lang, KEY).enqueue(object : Callback<CurrentWeatherApiResponse>{
+//            override fun onResponse(call: Call<CurrentWeatherApiResponse>, response: Response<CurrentWeatherApiResponse>) {
+//                selectedLocation.value = response.body()
+//            }
+//            override fun onFailure(call: Call<CurrentWeatherApiResponse>, t: Throwable) {
+//                Log.e(TAG, t.message.toString())
+//                selectedLocation.value = null
+//            }
+//        })
     }
 
     private fun getCurrentWeatherByCoords(lat: Double, lon: Double): MutableLiveData<CurrentWeatherApiResponse> {
         val currentWeatherApiResponseData = MutableLiveData<CurrentWeatherApiResponse>()
         val lang = Locale.getDefault().language
-        openWeatherService.getCurrentWeatherByCoords(lat, lon, lang, KEY).enqueue(object : Callback<CurrentWeatherApiResponse>{
-            override fun onResponse(call: Call<CurrentWeatherApiResponse>, response: Response<CurrentWeatherApiResponse>) {
-                currentWeatherApiResponseData.value = response.body()
-            }
-            override fun onFailure(call: Call<CurrentWeatherApiResponse>, t: Throwable) {
-                Log.e(TAG, t.message.toString())
-                currentWeatherApiResponseData.value = null
-            }
-        })
+//        openWeatherService.getCurrentWeatherByCoords(lat, lon, lang, KEY).enqueue(object : Callback<CurrentWeatherApiResponse>{
+//            override fun onResponse(call: Call<CurrentWeatherApiResponse>, response: Response<CurrentWeatherApiResponse>) {
+//                currentWeatherApiResponseData.value = response.body()
+//            }
+//            override fun onFailure(call: Call<CurrentWeatherApiResponse>, t: Throwable) {
+//                Log.e(TAG, t.message.toString())
+//                currentWeatherApiResponseData.value = null
+//            }
+//        })
         return currentWeatherApiResponseData
     }
 
     fun getWeatherForecastByCoords(lat: Double, lon: Double): MutableLiveData<WeatherForecastApiResponse> {
         val weatherForecastApiResponseData = MutableLiveData<WeatherForecastApiResponse>()
         val lang = Locale.getDefault().language
-        openWeatherService.getWeatherForecastByCoords(lat, lon, lang, KEY).enqueue(object : Callback<WeatherForecastApiResponse>{
-            override fun onResponse(call: Call<WeatherForecastApiResponse>, response: Response<WeatherForecastApiResponse>) {
-                weatherForecastApiResponseData.value = response.body()
-            }
-            override fun onFailure(call: Call<WeatherForecastApiResponse>, t: Throwable) {
-                Log.e(TAG, t.message.toString())
-                weatherForecastApiResponseData.value = null
-            }
-        })
+//        openWeatherService.getWeatherForecastByCoords(lat, lon, lang, KEY).enqueue(object : Callback<WeatherForecastApiResponse>{
+//            override fun onResponse(call: Call<WeatherForecastApiResponse>, response: Response<WeatherForecastApiResponse>) {
+//                weatherForecastApiResponseData.value = response.body()
+//            }
+//            override fun onFailure(call: Call<WeatherForecastApiResponse>, t: Throwable) {
+//                Log.e(TAG, t.message.toString())
+//                weatherForecastApiResponseData.value = null
+//            }
+//        })
         return weatherForecastApiResponseData
     }
 
