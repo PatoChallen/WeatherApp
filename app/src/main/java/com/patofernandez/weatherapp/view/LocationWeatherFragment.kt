@@ -65,26 +65,26 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
 
     private fun updateView() {
         Log.e(TAG, "updateView")
-        viewModel.getWeatherForecast().observe(requireActivity(), Observer {
-            Log.e(TAG, Gson().toJson(it))
-            if (it == null) return@Observer
-                mCustomForecast.setWeatherForecastData(
-                    it,
-                    object : CustomWeatherForecastView.OnForecastClickListener {
-                        override fun onForecastClick(currentWeather: CurrentWeatherApiResponse) {
-                            updateActualView(currentWeather)
-                        }
-                    })
-                it.city?.let { city ->
-                    city.coord?.let {  coord ->
-                        updateMap(LatLng(coord.latitude, coord.longitude), city.name)
-                    }
-                    mCity.text = "${city.name}, ${city.country}"
-                    mSunrise.text = FormatUtils.formatedTime(city.sunrise)
-                    mSunset.text = FormatUtils.formatedTime(city.sunset)
-                }
-                updateActualView(it.list.first())
-            })
+//        viewModel.getWeatherForecast().observe(requireActivity(), Observer {
+//            Log.e(TAG, Gson().toJson(it))
+//            if (it == null) return@Observer
+//                mCustomForecast.setWeatherForecastData(
+//                    it,
+//                    object : CustomWeatherForecastView.OnForecastClickListener {
+//                        override fun onForecastClick(currentWeather: CurrentWeatherApiResponse) {
+//                            updateActualView(currentWeather)
+//                        }
+//                    })
+//                it.city?.let { city ->
+//                    city.coord?.let {  coord ->
+//                        updateMap(LatLng(coord.latitude, coord.longitude), city.name)
+//                    }
+//                    mCity.text = "${city.name}, ${city.country}"
+//                    mSunrise.text = FormatUtils.formatedTime(city.sunrise)
+//                    mSunset.text = FormatUtils.formatedTime(city.sunset)
+//                }
+//                updateActualView(it.list.first())
+//            })
     }
 
     private fun updateActualView(currentWeather: CurrentWeatherApiResponse?) {

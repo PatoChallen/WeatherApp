@@ -3,7 +3,6 @@ package com.patofernandez.weatherapp.vo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 @Entity(

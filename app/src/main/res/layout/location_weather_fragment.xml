@@ -5,16 +5,16 @@
 
     <data>
 
-        <import type="com.patofernandez.weatherapp.model.WeatherForecastApiResponse" />
+        <import type="com.patofernandez.weatherapp.vo.City" />
         <import type="com.patofernandez.weatherapp.vo.Status" />
         <import type="com.patofernandez.weatherapp.vo.Resource" />
         <import type="androidx.lifecycle.LiveData" />
         <variable
             name="currentWeatherForecast"
-            type="WeatherForecastApiResponse" />
+            type="City" />
         <variable
             name="result"
-            type="LiveData&lt;Resource&lt;WeatherForecastApiResponse>>" />
+            type="LiveData&lt;Resource&lt;City>>" />
 
     </data>
 
@@ -157,10 +157,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
-        <com.patofernandez.weatherapp.view.CustomWeatherForecastView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/customForecast"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/weather_forecast_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

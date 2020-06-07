@@ -17,7 +17,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.gson.Gson
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.binding.FragmentDataBindingComponent
@@ -43,7 +42,9 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
 
     var adapter by autoCleared<WeatherHoursAdapter>()
 
-    val weatherViewModel: WeatherViewModel by viewModels {
+    var daysAdapter by autoCleared<WeatherDaysAdapter>()
+
+    private val weatherViewModel: WeatherViewModel by viewModels {
         viewModelFactory
     }
 
@@ -71,23 +72,29 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
         )
-
         binding.weatherHours.adapter = weatherHoursAdapter
         adapter = weatherHoursAdapter
-
+        val weatherDaysAdapter = WeatherDaysAdapter(
+            dataBindingComponent = dataBindingComponent,
+            appExecutors = appExecutors
+        ){
+            weatherViewModel.setSelectedDay(it)
+        }
+        binding.customForecast.adapter = weatherDaysAdapter
+        daysAdapter = weatherDaysAdapter
     }
 
     private fun initRecyclerView() {
         binding.result = weatherViewModel.currentWeatherForecast
+        weatherViewModel.selectedDay.observe(viewLifecycleOwner, Observer { cityDay ->
+            adapter.submitList(cityDay.hours)
+        })
         weatherViewModel.currentWeatherForecast.observe(viewLifecycleOwner, Observer { result ->
-        })
-        weatherViewModel.wheaterHoursByDay.observe(viewLifecycleOwner, Observer { result ->
             if (result.status == Status.SUCCESS){
-                adapter.submitList(result?.data)
+                daysAdapter.submitList(result.data!!.days)
             }
-
         })
-
+//        weatherViewModel.retry()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

@@ -3,6 +3,7 @@ package com.patofernandez.weatherapp.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.patofernandez.weatherapp.vo.FavoriteLocation
+import com.patofernandez.weatherapp.vo.LocationWeather
 
 @Dao
 interface FavoriteLocationDao {
@@ -17,4 +18,10 @@ interface FavoriteLocationDao {
 
     @Delete
     fun delete(favoriteLocation: FavoriteLocation)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCurrentLocation(locationWeather: LocationWeather): Long
+
+    @Query("SELECT * FROM locationweather")
+    fun loadLastCurrentLocation(): LiveData<LocationWeather>
 }

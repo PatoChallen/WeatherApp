@@ -8,28 +8,31 @@ import android.view.ViewGroup
 import com.patofernandez.weatherapp.databinding.FavoriteLocationItemBinding
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
+import com.patofernandez.weatherapp.databinding.WeatherHourItemBinding
 import com.patofernandez.weatherapp.ui.common.DataBoundListAdapter
+import com.patofernandez.weatherapp.vo.City
+import com.patofernandez.weatherapp.vo.DayHour
 import com.patofernandez.weatherapp.vo.FavoriteLocation
 
 /**
- * A RecyclerView adapter for [FavoriteLocation] class.
+ * A RecyclerView adapter for [DayHour] class.
  */
 class WeatherHoursAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors
-) : DataBoundListAdapter<FavoriteLocation, FavoriteLocationItemBinding>(
+) : DataBoundListAdapter<DayHour, WeatherHourItemBinding>(
     appExecutors = appExecutors,
-    diffCallback = object : DiffUtil.ItemCallback<FavoriteLocation>() {
-        override fun areItemsTheSame(oldItem: FavoriteLocation, newItem: FavoriteLocation): Boolean {
-            return oldItem.name == newItem.name
+    diffCallback = object : DiffUtil.ItemCallback<DayHour>() {
+        override fun areItemsTheSame(oldItem: DayHour, newItem: DayHour): Boolean {
+            return oldItem.date == newItem.date
         }
-        override fun areContentsTheSame(oldItem: FavoriteLocation, newItem: FavoriteLocation): Boolean {
-            return oldItem.coordinates == newItem.coordinates
+        override fun areContentsTheSame(oldItem: DayHour, newItem: DayHour): Boolean {
+            return oldItem.hour == newItem.hour
         }
     }
 ) {
 
-    override fun createBinding(parent: ViewGroup): FavoriteLocationItemBinding {
+    override fun createBinding(parent: ViewGroup): WeatherHourItemBinding {
         return DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.weather_hour_item,
@@ -39,8 +42,8 @@ class WeatherHoursAdapter(
         )
     }
 
-    override fun bind(binding: FavoriteLocationItemBinding, item: FavoriteLocation) {
-        binding.favoriteLocation = item
+    override fun bind(binding: WeatherHourItemBinding, item: DayHour) {
+        binding.hour = item
     }
 
 }

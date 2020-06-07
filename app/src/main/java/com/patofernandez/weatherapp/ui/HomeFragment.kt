@@ -54,7 +54,6 @@ class HomeFragment : Fragment(), Injectable {
             false,
             dataBindingComponent
         )
-
         return binding.root
     }
 
@@ -69,7 +68,6 @@ class HomeFragment : Fragment(), Injectable {
                     weatherViewModel.setLatLng(LatLng(favoriteLocation.lat, favoriteLocation.lng))
                     findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
                 }
-
                 override fun onFavoriteLocationDelete(favoriteLocation: FavoriteLocation) {
                     weatherViewModel.removeLocationFromFavorites(favoriteLocation)
                 }

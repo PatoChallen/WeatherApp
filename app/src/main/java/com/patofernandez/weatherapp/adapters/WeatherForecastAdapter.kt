@@ -11,15 +11,12 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.patofernandez.weatherapp.R
-import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
-import com.patofernandez.weatherapp.utils.FormatUtils
-import com.patofernandez.weatherapp.view.CustomWeatherForecastView
-import com.squareup.picasso.Picasso
+import com.patofernandez.weatherapp.vo.CityDay
 import kotlinx.android.synthetic.main.weather_forecast_item.view.*
 
 class WeatherForecastAdapter(
-    private var forecast: List<CurrentWeatherApiResponse>,
-    private val mListener: CustomWeatherForecastView.OnForecastClickListener?
+    private var forecast: List<CityDay>,
+    private val mListener: OnDayClickListener?
 ) : RecyclerView.Adapter<WeatherForecastAdapter.ViewHolder>() {
 
     private var indexSelected: Int = 0
@@ -41,37 +38,41 @@ class WeatherForecastAdapter(
     @Suppress("DEPRECATION")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = forecast[position]
-        holder.date.text = FormatUtils.formatedDay(item.date)
-        if (indexSelected == position) {
-            holder.card.setCardBackgroundColor(context.resources.getColor(R.color.cardActive))
-        } else {
-            holder.card.setCardBackgroundColor(context.resources.getColor(R.color.cardInactive))
-        }
-        item.weather.first()?.let { weather ->
-            Picasso
-                .get()
-                .load("https://openweathermap.org/img/wn/${weather.icon}@4x.png")
-                .into(holder.imgWeather)
-        }
-        item.main?.let { main ->
-            holder.tempMin.text = FormatUtils.formatedKelvinToCelsius(main.tempMin)
-            holder.tempMax.text = FormatUtils.formatedKelvinToCelsius(main.tempMax)
-            holder.humidity.text = main.humidity.toString().plus(" %")
-            holder.pressure.text = main.pressure.toString().plus(" hpa")
-        }
-
-        with(holder.mView) {
-            tag = item
-            setOnClickListener{
-                indexSelected = position
-                mListener?.onForecastClick(item)
-                notifyDataSetChanged()
-            }
-        }
+//        holder.date.text = FormatUtils.formatedDay(item.date)
+//        if (indexSelected == position) {
+//            holder.card.setCardBackgroundColor(context.resources.getColor(R.color.cardActive))
+//        } else {
+//            holder.card.setCardBackgroundColor(context.resources.getColor(R.color.cardInactive))
+//        }
+//        item.weather.first()?.let { weather ->
+//            Picasso
+//                .get()
+//                .load("https://openweathermap.org/img/wn/${weather.icon}@4x.png")
+//                .into(holder.imgWeather)
+//        }
+//        item.main?.let { main ->
+//            holder.tempMin.text = FormatUtils.formatedKelvinToCelsius(main.tempMin)
+//            holder.tempMax.text = FormatUtils.formatedKelvinToCelsius(main.tempMax)
+//            holder.humidity.text = main.humidity.toString().plus(" %")
+//            holder.pressure.text = main.pressure.toString().plus(" hpa")
+//        }
+//
+//        with(holder.mView) {
+//            tag = item
+//            setOnClickListener{
+//                indexSelected = position
+//                mListener?.onForecastClick(item)
+//                notifyDataSetChanged()
+//            }
+//        }
     }
 
     override fun getItemCount(): Int = forecast.size
 
+
+    interface OnDayClickListener {
+        fun onDayClick(cityDay: CityDay)
+    }
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val date: TextView = mView.date
         val imgWeather: ImageView = mView.imgWeather
