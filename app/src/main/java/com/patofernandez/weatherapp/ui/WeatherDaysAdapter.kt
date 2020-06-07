@@ -8,16 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.WindowManager
-import com.patofernandez.weatherapp.databinding.FavoriteLocationItemBinding
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
-import com.patofernandez.weatherapp.databinding.WeatherForecastItemBinding
-import com.patofernandez.weatherapp.databinding.WeatherHourItemBinding
+import com.patofernandez.weatherapp.databinding.DayItemBinding
 import com.patofernandez.weatherapp.ui.common.DataBoundListAdapter
-import com.patofernandez.weatherapp.vo.City
 import com.patofernandez.weatherapp.vo.CityDay
-import com.patofernandez.weatherapp.vo.DayHour
-import com.patofernandez.weatherapp.vo.FavoriteLocation
 
 /**
  * A RecyclerView adapter for [CityDay] class.
@@ -26,7 +21,7 @@ class WeatherDaysAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
     private val repoClickCallback: ((CityDay) -> Unit)?
-) : DataBoundListAdapter<CityDay, WeatherForecastItemBinding>(
+) : DataBoundListAdapter<CityDay, DayItemBinding>(
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<CityDay>() {
         override fun areItemsTheSame(oldItem: CityDay, newItem: CityDay): Boolean {
@@ -37,29 +32,34 @@ class WeatherDaysAdapter(
         }
     }
 ) {
+    var selectedItem: CityDay? = null
 
-    override fun createBinding(parent: ViewGroup): WeatherForecastItemBinding {
-        val binding: WeatherForecastItemBinding = DataBindingUtil.inflate(
+    override fun createBinding(parent: ViewGroup): DayItemBinding {
+        val binding: DayItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.weather_forecast_item,
+            R.layout.day_item,
             parent,
             false,
             dataBindingComponent
         )
-        val layoutParams = binding.root.layoutParams
         val wm = parent.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val dm = DisplayMetrics()
         wm.defaultDisplay.getMetrics(dm)
-        layoutParams.width = dm.widthPixels / 6
-        binding.root.setOnClickListener {
-            binding.day.let {
-                repoClickCallback?.invoke(it!!)
+        with(binding.root) {
+            layoutParams.width = dm.widthPixels / itemCount
+            setOnClickListener {
+                binding.day.let {
+                    repoClickCallback?.invoke(it!!)
+                    selectedItem = it
+                    notifyDataSetChanged()
+                }
             }
         }
         return binding
     }
 
-    override fun bind(binding: WeatherForecastItemBinding, item: CityDay) {
+    override fun bind(binding: DayItemBinding, item: CityDay) {
+        binding.selected = item == selectedItem
         binding.day = item
     }
 

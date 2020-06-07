@@ -9,4 +9,5 @@ class CityDay {
 
     fun getTempMax() =  hours.maxBy { it.tempMax }?.tempMax
     fun getTempMin() =  hours.minBy { it.tempMin }?.tempMin
+    fun getIconUrl() =  hours.first().iconUrl
 }

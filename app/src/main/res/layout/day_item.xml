@@ -5,9 +5,13 @@
 
     <data>
         <variable
+            name="selected"
+            type="Boolean" />
+        <variable
             name="day"
             type="com.patofernandez.weatherapp.vo.CityDay" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,6 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="1px"
+            android:backgroundTint="@{selected ? @color/cardActive : @color/cardInactive}"
             app:cardPreventCornerOverlap="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +37,7 @@
                     android:id="@+id/date"
                     style="@style/customItemText"
                     android:textColor="@color/textColor"
-                    android:text="Fri"
+                    android:text="@{day.day}"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +48,7 @@
                     android:id="@+id/imgWeather"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:src="@mipmap/ic_launcher"
+                    imageUrl="@{day.iconUrl}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/date" />
@@ -52,7 +57,9 @@
                     android:id="@+id/tempMax"
                     style="@style/customItemText"
                     android:textColor="@color/textColor"
-                    android:text="19º"
+                    android:text="@{day.tempMax}"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintTop_toBottomOf="@+id/imgWeather" />
@@ -73,7 +80,8 @@
                     android:id="@+id/tempMin"
                     style="@style/customItemText"
                     android:textColor="@color/textColor"
-                    android:text="9º"
+                    android:text="@{day.tempMin}"
+                    android:fontFamily="sans-serif-condensed-light"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintTop_toBottomOf="@+id/tempMax" />
@@ -90,25 +98,6 @@
                     app:layout_constraintStart_toEndOf="@id/guideline"
                     app:layout_constraintTop_toTopOf="@+id/tempMin" />
 
-                <TextView
-                    android:id="@+id/humidity"
-                    style="@style/customItemText"
-                    android:textColor="@color/textColor"
-                    android:text="70%"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tempMin" />
-
-                <TextView
-                    android:id="@+id/pressure"
-                    style="@style/customItemText"
-                    android:textColor="@color/textColor"
-                    android:text="1024 hpa"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/humidity" />
-
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline"
                     android:layout_width="wrap_content"
@@ -121,4 +110,5 @@
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

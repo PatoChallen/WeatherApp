@@ -28,13 +28,13 @@ import javax.inject.Inject
 
 class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
 
-    private lateinit var mMap: GoogleMap
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var appExecutors: AppExecutors
+
+    private lateinit var mMap: GoogleMap
 
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
@@ -44,9 +44,7 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
 
     var daysAdapter by autoCleared<WeatherDaysAdapter>()
 
-    private val weatherViewModel: WeatherViewModel by viewModels {
-        viewModelFactory
-    }
+    private val weatherViewModel: WeatherViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,14 +85,15 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
     private fun initRecyclerView() {
         binding.result = weatherViewModel.currentWeatherForecast
         weatherViewModel.selectedDay.observe(viewLifecycleOwner, Observer { cityDay ->
+            daysAdapter.selectedItem = cityDay
             adapter.submitList(cityDay.hours)
         })
         weatherViewModel.currentWeatherForecast.observe(viewLifecycleOwner, Observer { result ->
             if (result.status == Status.SUCCESS){
                 daysAdapter.submitList(result.data!!.days)
+                weatherViewModel.setSelectedDay(result.data.days.first())
             }
         })
-//        weatherViewModel.retry()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

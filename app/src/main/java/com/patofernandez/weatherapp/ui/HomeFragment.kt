@@ -92,7 +92,11 @@ class HomeFragment : Fragment(), Injectable {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         fusedLocationClient.lastLocation.apply {
             addOnSuccessListener { location ->
+                Log.e(TAG, "OnSucces: ${Gson().toJson(location.latitude)}")
                 weatherViewModel.setMyLatLng(LatLng(location.latitude, location.longitude))
+            }
+            addOnFailureListener {
+                Log.e(TAG, "OnFailure: ${it.message}")
             }
         }
     }

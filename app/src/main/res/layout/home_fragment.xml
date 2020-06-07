@@ -76,7 +76,8 @@
                     app:imageUrl="@{currentLocation.iconUrl}"
                     app:layout_constraintStart_toEndOf="@id/temp"
                     app:layout_constraintTop_toTopOf="@id/temp"
-                    app:layout_constraintBottom_toBottomOf="@id/temp"/>
+                    app:layout_constraintBottom_toBottomOf="@id/temp"
+                    tools:ignore="ContentDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

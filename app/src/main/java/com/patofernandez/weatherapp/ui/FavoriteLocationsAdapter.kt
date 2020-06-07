@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import com.patofernandez.weatherapp.databinding.FavoriteLocationItemBinding
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
-import com.patofernandez.weatherapp.adapters.FavoriteLocationsAdapter
 import com.patofernandez.weatherapp.ui.common.DataBoundListAdapter
 import com.patofernandez.weatherapp.vo.FavoriteLocation
 
