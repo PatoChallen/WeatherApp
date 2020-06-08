@@ -1,5 +1,4 @@
-# WeatherApp
-# Technical test
+# WeatherApp - Technical test
 
 Developed in **Android Studio** by **Patricio Fernandez Challen** 
 
