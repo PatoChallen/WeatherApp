@@ -52,7 +52,7 @@ class WeatherRepository @Inject constructor(
                     WeatherTypeConverters.forecastResponseToLocationWeather(item)
                 )
             }
-            override fun shouldFetch(data: LocationWeather?): Boolean = data == null
+            override fun shouldFetch(data: LocationWeather?): Boolean = true
 
             override fun loadFromDb(): LiveData<LocationWeather> = favoriteLocationDao.loadLastCurrentLocation()
 

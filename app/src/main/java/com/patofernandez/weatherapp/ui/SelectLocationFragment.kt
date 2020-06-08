@@ -92,7 +92,7 @@ class SelectLocationFragment : Fragment(), OnMapReadyCallback, Injectable {
             lastMarker = addMarker(MarkerOptions().position(latLng).title(title))
             animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM_DEFAULT))
         }
-        weatherViewModel.setLatLng(latLng)
+        weatherViewModel.setSelectedLatLng(latLng)
 //        showLoader()
     }
 

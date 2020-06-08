@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 @Entity(
     indices = [
@@ -43,9 +42,5 @@ data class LocationWeather (
     @field:SerializedName("clouds")
     val clouds: String,
     @field:SerializedName("windSpeed")
-    val windSpeed: String,
-    @field:SerializedName("sunrise")
-    val sunrise: String,
-    @field:SerializedName("sunset")
-    val sunset: String
+    val windSpeed: String
 )

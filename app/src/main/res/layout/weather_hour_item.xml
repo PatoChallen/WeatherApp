@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -12,9 +12,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1px"
-        android:layout_marginTop="1px"
-        android:backgroundTint="@color/cardActive"
+        android:layout_marginBottom="@dimen/pix1"
+        android:layout_marginTop="@dimen/pix1"
+        android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,50 +26,48 @@
 
             <TextView
                 android:id="@+id/day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:textColor="@color/textColor"
+                style="@style/hourItemText"
+                android:layout_marginStart="@dimen/dim16"
                 android:text="@{hour.hour}"
-                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="00:00 - 03:00" />
 
             <ImageView
                 android:id="@+id/imgWeather"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="@dimen/dim40"
+                android:layout_height="@dimen/dim40"
+                android:layout_marginEnd="@dimen/dim16"
                 app:imageUrl="@{hour.iconUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/clouds" />
 
             <TextView
                 android:id="@+id/tempMax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/textColor"
+                style="@style/hourItemText"
+                android:layout_marginEnd="@dimen/dim16"
                 android:text="@{hour.tempMax}"
-                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="22º" />
 
             <TextView
                 android:id="@+id/tempMin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:layout_marginEnd="16dp"
+                style="@style/hourItemText"
+                android:layout_marginEnd="@dimen/dim16"
                 android:text="@{hour.tempMin}"
-                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed-light"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="17º" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"

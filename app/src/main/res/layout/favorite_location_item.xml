@@ -12,25 +12,26 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp">
+        android:layout_margin="@dimen/dim1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_margin="@dimen/dim10">
 
             <TextView
                 android:id="@+id/favTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:padding="@dimen/dim5"
                 android:fontFamily="sans-serif-condensed-light"
                 android:textStyle="bold"
                 android:text="@{favoriteLocation.name}"
-                android:textSize="20sp"
+                android:textSize="@dimen/text20"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Villa Urquiza" />
 
             <ImageView
                 android:id="@+id/delete"
@@ -47,13 +48,14 @@
                 android:id="@+id/temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/dim10"
                 android:fontFamily="sans-serif-condensed-light"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/favTitle"
                 android:text="@{favoriteLocation.temp}"
-                android:textSize="50sp"
-                android:letterSpacing="-0.1" />
+                android:textSize="@dimen/text50"
+                android:letterSpacing="-0.1"
+                tools:text="22º" />
 
             <ImageView
                 android:id="@+id/imgWeather"
@@ -61,22 +63,23 @@
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
                 app:imageUrl="@{favoriteLocation.iconUrl}"
-                android:src="@drawable/clouds"
                 app:layout_constraintTop_toTopOf="@id/temp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/temp"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/clouds" />
 
             <TextView
                 android:id="@+id/tempMax"
                 style="@style/customText"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_marginStart="@dimen/dim5"
+                android:textSize="@dimen/text15"
                 android:text="@{favoriteLocation.tempMax}"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintBottom_toTopOf="@id/tempMin"
                 app:layout_constraintStart_toEndOf="@+id/temp"
-                app:layout_constraintTop_toTopOf="@+id/temp" />
+                app:layout_constraintTop_toTopOf="@+id/temp"
+                tools:text="24º" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -91,13 +94,14 @@
             <TextView
                 android:id="@+id/tempMin"
                 style="@style/customText"
-                android:layout_marginStart="6dp"
-                android:textSize="15sp"
+                android:layout_marginStart="@dimen/dim5"
+                android:textSize="@dimen/text15"
                 android:text="@{favoriteLocation.tempMin}"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/temp"
                 app:layout_constraintTop_toBottomOf="@+id/tempMax"
-                app:layout_constraintBottom_toBottomOf="@id/temp"/>
+                app:layout_constraintBottom_toBottomOf="@id/temp"
+                tools:text="18º" />
 
             <ImageView
                 android:layout_width="wrap_content"

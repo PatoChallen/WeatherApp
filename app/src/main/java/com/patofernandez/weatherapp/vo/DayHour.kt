@@ -1,7 +1,5 @@
 package com.patofernandez.weatherapp.vo
 
-import com.google.gson.annotations.SerializedName
-
 class DayHour {
     var date: String = ""
     var hour: String = ""

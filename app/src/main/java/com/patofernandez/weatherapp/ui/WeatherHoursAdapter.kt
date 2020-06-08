@@ -1,18 +1,15 @@
 package com.patofernandez.weatherapp.ui
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import com.patofernandez.weatherapp.databinding.FavoriteLocationItemBinding
 import com.patofernandez.weatherapp.AppExecutors
 import com.patofernandez.weatherapp.R
 import com.patofernandez.weatherapp.databinding.WeatherHourItemBinding
 import com.patofernandez.weatherapp.ui.common.DataBoundListAdapter
-import com.patofernandez.weatherapp.vo.City
 import com.patofernandez.weatherapp.vo.DayHour
-import com.patofernandez.weatherapp.vo.FavoriteLocation
 
 /**
  * A RecyclerView adapter for [DayHour] class.

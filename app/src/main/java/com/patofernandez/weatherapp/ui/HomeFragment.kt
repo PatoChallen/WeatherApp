@@ -65,7 +65,7 @@ class HomeFragment : Fragment(), Injectable {
             appExecutors = appExecutors,
             onFavoriteActionListener = object : FavoriteLocationsAdapter.OnFavoriteActionListener {
                 override fun onFavoriteLocationClick(favoriteLocation: FavoriteLocation) {
-                    weatherViewModel.setLatLng(LatLng(favoriteLocation.lat, favoriteLocation.lng))
+                    weatherViewModel.setForecastLatLng(LatLng(favoriteLocation.lat, favoriteLocation.lng))
                     findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
                 }
                 override fun onFavoriteLocationDelete(favoriteLocation: FavoriteLocation) {
@@ -80,11 +80,11 @@ class HomeFragment : Fragment(), Injectable {
             findNavController().navigate(R.id.action_homeFragment_to_selectLocationFragment)
         }
         binding.myLocation.setOnClickListener {
-            weatherViewModel.setLatLng()
+            weatherViewModel.setForecastLatLng()
             findNavController().navigate(R.id.action_homeFragment_to_locationWeatherFragment)
         }
         weatherViewModel.currentLocation.observe(viewLifecycleOwner, Observer { result ->
-            Log.e(SelectLocationFragment.TAG, Gson().toJson(result))
+            Log.e(TAG, Gson().toJson(result))
             if (result.status == Status.SUCCESS){
                 binding.currentLocation = result.data
             }

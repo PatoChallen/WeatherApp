@@ -85,14 +85,9 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
     private fun initRecyclerView() {
         binding.result = weatherViewModel.currentWeatherForecast
         weatherViewModel.selectedDay.observe(viewLifecycleOwner, Observer { cityDay ->
+            binding.day = cityDay
             daysAdapter.selectedItem = cityDay
             adapter.submitList(cityDay.hours)
-        })
-        weatherViewModel.currentWeatherForecast.observe(viewLifecycleOwner, Observer { result ->
-            if (result.status == Status.SUCCESS){
-                daysAdapter.submitList(result.data!!.days)
-                weatherViewModel.setSelectedDay(result.data.days.first())
-            }
         })
     }
 
@@ -103,6 +98,16 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
             isScrollGesturesEnabled = false
             isZoomGesturesEnabled = false
         }
+        weatherViewModel.currentWeatherForecast.observe(viewLifecycleOwner, Observer { result ->
+            if (result.status == Status.SUCCESS){
+                result.data?.let { city ->
+                    binding.location = result.data
+                    daysAdapter.submitList(result.data!!.days)
+                    weatherViewModel.setSelectedDay(result.data.days.first())
+                    updateMap(city.getLatLng(), city.city)
+                }
+            }
+        })
     }
 
     private fun updateMap(latLng: LatLng, title: String) {

@@ -1,7 +1,6 @@
 package com.patofernandez.weatherapp.model
 
 import com.google.gson.annotations.SerializedName
-import com.patofernandez.weatherapp.vo.LocationWeather
 
 data class CurrentWeatherApiResponse (
     @SerializedName("coord")

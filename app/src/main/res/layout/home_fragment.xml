@@ -4,26 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="com.patofernandez.weatherapp.vo.LocationWeather" />
         <import type="com.patofernandez.weatherapp.vo.FavoriteLocation" />
-
-        <import type="java.util.List" />
-
         <import type="com.patofernandez.weatherapp.vo.Status" />
-
         <import type="com.patofernandez.weatherapp.vo.Resource" />
+        <import type="java.util.List" />
         <import type="androidx.lifecycle.LiveData"/>
-
         <variable
             name="currentLocation"
             type="LocationWeather" />
-
         <variable
             name="result"
             type="LiveData&lt;Resource&lt;List&lt;FavoriteLocation>>>" />
-
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toggle"
         android:layout_width="match_parent"
@@ -46,28 +40,30 @@
                     android:id="@+id/favTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
+                    android:padding="@dimen/dim16"
                     android:fontFamily="sans-serif-condensed-light"
                     android:textStyle="bold"
                     android:textColor="@color/textColor"
                     android:text="@{currentLocation.city}"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/text25"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Villa Urquiza" />/>
 
                 <TextView
                     android:id="@+id/temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColor"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dim10"
                     android:fontFamily="sans-serif-condensed-light"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/favTitle"
                     android:text="@{currentLocation.temp}"
-                    android:textSize="90sp"
-                    android:letterSpacing="-0.1" />
+                    android:textSize="@dimen/text90"
+                    android:letterSpacing="-0.1"
+                    tools:text="24º" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -77,6 +73,7 @@
                     app:layout_constraintStart_toEndOf="@id/temp"
                     app:layout_constraintTop_toTopOf="@id/temp"
                     app:layout_constraintBottom_toBottomOf="@id/temp"
+                    tools:src="@drawable/clouds"
                     tools:ignore="ContentDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -98,7 +95,7 @@
             android:id="@+id/btnAddLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_margin="@dimen/dim30"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

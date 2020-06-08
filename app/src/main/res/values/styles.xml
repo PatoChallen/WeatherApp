@@ -8,9 +8,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AfternoonAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#C33939</item>
+        <item name="colorPrimaryDark">#920101</item>
+        <item name="colorAccent">#ff0000</item>
+    </style>
+
+    <style name="NightAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#4D4D4D</item>
+        <item name="colorPrimaryDark">#151515</item>
+        <item name="colorAccent">#8D8D8D</item>
+    </style>
+
     <style name="customText" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColor</item>
         <item name="android:textSize">20sp</item>
     </style>
 
@@ -19,6 +32,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="hourItemText" parent="customText">
+        <item name="android:textSize">@dimen/text18</item>
     </style>
 
 </resources>

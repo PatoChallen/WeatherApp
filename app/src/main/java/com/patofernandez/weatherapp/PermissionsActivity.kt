@@ -23,12 +23,12 @@ class PermissionsActivity : AppCompatActivity() {
         Log.e(TAG, "onCreate")
         setContentView(R.layout.permissions_activity)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            checkPermission();
+            checkPermission()
         }
         btnAddLocation.setOnClickListener {
             val intent = Intent().apply {
-                action = android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
-                data = Uri.fromParts("package", packageName, null);
+                action = android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                data = Uri.fromParts("package", packageName, null)
             }
             startActivityForResult(intent, PREFERENCE_REQUEST_CODE)
             btnAddLocation.visibility = View.VISIBLE
