@@ -9,9 +9,9 @@
     </style>
 
     <style name="AfternoonAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#872727</item>
+        <item name="colorPrimary">#9B3701</item>
         <item name="colorPrimaryDark">#920101</item>
-        <item name="colorAccent">#ff0000</item>
+        <item name="colorAccent">#CE4902</item>
     </style>
 
     <style name="NightAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">

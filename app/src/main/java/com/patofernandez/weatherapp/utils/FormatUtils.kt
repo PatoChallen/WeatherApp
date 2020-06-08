@@ -57,9 +57,5 @@ class FormatUtils {
             }
         }
 
-//        fun formatedVisibility(visibility: Double): String {
-//            return BigDecimal(visibility / 1000).setScale(0, RoundingMode.HALF_EVEN).toString().plus(" Km")
-//        }
-
     }
 }

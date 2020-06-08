@@ -3,14 +3,10 @@ package com.patofernandez.weatherapp.api
 import androidx.lifecycle.LiveData
 import com.patofernandez.weatherapp.model.CurrentWeatherApiResponse
 import com.patofernandez.weatherapp.model.WeatherForecastApiResponse
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface OpenWeatherService {
-
-    @GET("weather")
-    fun getWeather(@Query("appid") appid: String): Call<CurrentWeatherApiResponse>
 
     @GET("weather")
     fun getCurrentWeatherByCoords(@Query("lat") lat: Double,

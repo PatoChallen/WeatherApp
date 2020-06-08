@@ -3,7 +3,7 @@ package com.patofernandez.weatherapp.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.patofernandez.weatherapp.ui.WeatherViewModel
-import com.patofernandez.weatherapp.viewmodel.LocationViewModel
+import com.patofernandez.weatherapp.ui.LocationViewModel
 import com.patofernandez.weatherapp.viewmodel.WeathweAppModelFactory
 import dagger.Binds
 import dagger.Module

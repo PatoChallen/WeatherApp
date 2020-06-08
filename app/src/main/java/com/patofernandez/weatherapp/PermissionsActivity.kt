@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -68,7 +67,6 @@ class PermissionsActivity : AppCompatActivity() {
         Log.e(TAG, "onRequestPermissionsResult ${Gson().toJson(grantResults)}")
 
         when(requestCode) {
-
             PERMISSIONS_REQUEST_CODE ->
                 when(grantResults.contains(RESULT_OK)) {
                     true ->
@@ -76,16 +74,15 @@ class PermissionsActivity : AppCompatActivity() {
                     false ->
                         if (shouldShowRequestPermissionRationale( permissions.first() )) {
                             btnAddLocation.visibility = View.GONE
+                            preferences.visibility = View.GONE
                             Log.e(TAG, "Just Deny")
                         } else {
                             btnAddLocation.visibility = View.VISIBLE
+                            preferences.visibility = View.VISIBLE
                             Log.e(TAG, "Don't ask again selected")
-                            Toast.makeText(this, "Don't ask again selected", Toast.LENGTH_SHORT).show()
                         }
                 }
-
             PREFERENCE_REQUEST_CODE -> checkPermission()
-
         }
     }
 

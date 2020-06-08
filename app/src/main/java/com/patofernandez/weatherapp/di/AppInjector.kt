@@ -11,9 +11,6 @@ import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 
-/**
- * Helper class to automatically inject fragments if they implement [Injectable].
- */
 object AppInjector {
     fun init(weatherApp: WeatherApplication) {
         DaggerAppComponent.builder().application(weatherApp)

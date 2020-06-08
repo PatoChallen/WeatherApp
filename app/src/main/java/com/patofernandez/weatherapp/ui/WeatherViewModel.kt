@@ -107,9 +107,6 @@ class WeatherViewModel  @Inject constructor(private val weatherRepository: Weath
     fun setForecastLatLng() {
         if (_forecastLatLng.value != _myLatLng.value) {
             _forecastLatLng.value = _myLatLng.value
-//            _selectedLatLng.value?.let {
-//                _selectedLatLng.value = it
-//            }
         }
     }
 

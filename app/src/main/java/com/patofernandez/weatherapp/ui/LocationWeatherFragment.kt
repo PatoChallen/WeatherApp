@@ -36,13 +36,13 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
 
     private lateinit var mMap: GoogleMap
 
-    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    private var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
     var binding by autoCleared<LocationWeatherFragmentBinding>()
 
-    var adapter by autoCleared<WeatherHoursAdapter>()
+    private var adapter by autoCleared<WeatherHoursAdapter>()
 
-    var daysAdapter by autoCleared<WeatherDaysAdapter>()
+    private var daysAdapter by autoCleared<WeatherDaysAdapter>()
 
     private val weatherViewModel: WeatherViewModel by viewModels { viewModelFactory }
 
@@ -83,7 +83,6 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
     }
 
     private fun initRecyclerView() {
-        binding.result = weatherViewModel.currentWeatherForecast
         weatherViewModel.selectedDay.observe(viewLifecycleOwner, Observer { cityDay ->
             binding.day = cityDay
             daysAdapter.selectedItem = cityDay
@@ -98,11 +97,12 @@ class LocationWeatherFragment : Fragment(), OnMapReadyCallback, Injectable {
             isScrollGesturesEnabled = false
             isZoomGesturesEnabled = false
         }
+        binding.result = weatherViewModel.currentWeatherForecast
         weatherViewModel.currentWeatherForecast.observe(viewLifecycleOwner, Observer { result ->
             if (result.status == Status.SUCCESS){
                 result.data?.let { city ->
                     binding.location = result.data
-                    daysAdapter.submitList(result.data!!.days)
+                    daysAdapter.submitList(result.data.days)
                     weatherViewModel.setSelectedDay(result.data.days.first())
                     updateMap(city.getLatLng(), city.city)
                 }

@@ -53,16 +53,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.60" />
 
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDetails"
             android:layout_width="0dp"
@@ -111,6 +101,7 @@
                     android:text="@{currentWeather.tempMax}"
                     android:layout_marginStart="@dimen/dim16"
                     android:textStyle="bold"
+                    app:visibility="@{currentWeather != null}"
                     app:layout_constraintVertical_chainStyle="packed"
                     app:layout_constraintBottom_toTopOf="@+id/tempMin"
                     app:layout_constraintStart_toEndOf="@+id/temp"
@@ -133,6 +124,7 @@
                     style="@style/customText"
                     android:text="@{currentWeather.tempMin}"
                     android:layout_marginStart="@dimen/dim16"
+                    app:visibility="@{currentWeather != null}"
                     app:layout_constraintVertical_chainStyle="packed"
                     app:layout_constraintTop_toBottomOf="@id/tempMax"
                     app:layout_constraintStart_toEndOf="@+id/temp"
@@ -166,6 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_location"
+                    app:visibility="@{currentWeather != null}"
                     app:layout_constraintBottom_toBottomOf="@+id/latLng"
                     app:layout_constraintEnd_toStartOf="@+id/latLng"
                     app:layout_constraintTop_toTopOf="@+id/latLng"
@@ -188,9 +181,10 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:padding="@dimen/dim16"
+                    android:textColor="@color/textColor"
                     app:visibility="@{currentWeather == null}"
                     android:text="@string/select_location_instructions"
-                    android:textSize="@dimen/text25"
+                    android:textSize="@dimen/text20"
                     android:background="@color/cardActive"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

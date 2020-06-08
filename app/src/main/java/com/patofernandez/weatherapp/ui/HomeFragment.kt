@@ -33,11 +33,11 @@ class HomeFragment : Fragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
 
-    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    private var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
     var binding by autoCleared<HomeFragmentBinding>()
 
-    var adapter by autoCleared<FavoriteLocationsAdapter>()
+    private var adapter by autoCleared<FavoriteLocationsAdapter>()
 
     private val weatherViewModel: WeatherViewModel by viewModels {
         viewModelFactory

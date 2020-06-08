@@ -6,4 +6,9 @@
     <string name="title_select_location">Seleccione la ubicacón en el mapa</string>
     <string name="select_location_instructions">Empecemos!\n\nPrimero, seleccione una ubicación en el mapa\nLuego, confirme para agregarla a sus ubicaciones favoritas</string>
     <string name="add_location">Agregar Ubicación</string>
+    <string name="open_preferences">Abrir Preferencias</string>
+    <string name="retry">Continuar</string>
+    <string name="location_message">Esta aplicación necesita acceder su ubicación para poder funcionar. Porfavor habilite la ubicación para poder continuar</string>
+    <string name="preferences_message">La ubicación está desactivada en este dispositivo, abra preferencias y habilite la ubicación para poder continuar</string>
+    <string name="current_location">ubicación actual</string>
 </resources>

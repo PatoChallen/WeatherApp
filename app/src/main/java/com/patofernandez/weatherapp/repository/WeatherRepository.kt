@@ -17,15 +17,7 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Repository that handles Repo instances.
- *
- * unfortunate naming :/ .
- * Repo - value object name
- * Repository - type of this class.
- */
 @Singleton
-//@OpenForTesting
 class WeatherRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val db: WeatherDb,
