@@ -1,13 +1,15 @@
 # WeatherApp
 # Technical test
 
-Aplicación desarrollada en **Android Studio** por **Patricio Fernandez Challen** 
+Developed in **Android Studio** by **Patricio Fernandez Challen** 
 
-# Arquitectura
+# Architecture
 
-Basada en el patrón **MVVM**
+**- MVVM**
 
-## Librerias utilizadas
+**- Dependency Injection**
+
+## Libraries
 
  - [Jetpack](https://developer.android.com/jetpack/?gclid=EAIaIQobChMIqeeQhObQ6QIVvOy1Ch3eTAgQEAAYASAAEgLWfPD_BwE&gclsrc=aw.ds)
  - [Room](https://developer.android.com/jetpack/androidx/releases/room)
@@ -18,9 +20,9 @@ Basada en el patrón **MVVM**
  - [Kotlin KTX](https://developer.android.com/kotlin/ktx)
  - [AppCompat](https://developer.android.com/topic/libraries/support-library/packages#v7-appcompat)
 
-## Librerias de terceros
+## Third Party Libraries
 
  - [Retrofit](https://square.github.io/retrofit/)
  - [Dagger](https://github.com/google/dagger)
  - [Glide](https://github.com/bumptech/glide)
- - [Google Maps](https://developers.google.com/maps/documentation/android-sdk/intro)
+ - [Google Maps API](https://developers.google.com/maps/documentation/android-sdk/intro)
