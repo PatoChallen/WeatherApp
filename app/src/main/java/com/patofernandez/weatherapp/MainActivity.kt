@@ -1,64 +1,37 @@
 package com.patofernandez.weatherapp
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.location.LocationServices
-import com.google.gson.Gson
-import com.patofernandez.weatherapp.viewmodel.WeatherViewModel
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import com.patofernandez.weatherapp.databinding.MainActivityBinding
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import java.util.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var viewModel: WeatherViewModel
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         Log.e(TAG, "onCreate")
-        setContentView(R.layout.main_activity)
-        viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
-        checkPermission()
-    }
-
-    private fun checkPermission() {
-        val fineLocation = Manifest.permission.ACCESS_FINE_LOCATION
-        val coarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION
-        val granted = PackageManager.PERMISSION_GRANTED
-        Log.e(PermissionsActivity.TAG, "checkPermission")
-        if (ContextCompat.checkSelfPermission(this, fineLocation) == granted ||
-            ContextCompat.checkSelfPermission(this, coarseLocation) == granted) {
-            Log.e(TAG, "PERMISO OK")
-            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-            fusedLocationClient.lastLocation.apply {
-                addOnSuccessListener { location ->
-                    Log.e(TAG, "Location ${Gson().toJson(location)}") // ${location.latitude} ${location.longitude}")
-                }
-                addOnFailureListener {
-                    Log.e(TAG, "failure ${it.message.toString()}")
-                }
-                addOnCanceledListener {
-                    Log.e(TAG, "canceled")
-                }
-                addOnCompleteListener {
-                    Log.e(TAG, "complete ${Gson().toJson(it)}")
-                }
-            }
-        } else {
-            Log.e(TAG, "PERMISO COMO EL ORTO")
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    fineLocation,
-                    coarseLocation
-                ),
-                PermissionsActivity.PERMISSIONS_REQUEST_CODE
-            )
+        when(Calendar.getInstance()[Calendar.HOUR_OF_DAY]) {
+            in 7..17 -> setTheme(R.style.AppTheme)
+            in 18..20 -> setTheme(R.style.AfternoonAppTheme)
+            else ->  setTheme(R.style.NightAppTheme)
+        }
+        super.onCreate(savedInstanceState)
+        val binding = DataBindingUtil.setContentView<MainActivityBinding>(this, R.layout.main_activity)
+        binding.background = when(Calendar.getInstance()[Calendar.HOUR_OF_DAY]) {
+            in 7..17 -> R.color.day
+            in 18..20 -> R.color.afternoon
+            else -> R.color.night
         }
     }
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     companion object {
         const val TAG = "MainActivity"

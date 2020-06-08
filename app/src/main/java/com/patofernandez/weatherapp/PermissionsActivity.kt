@@ -23,15 +23,15 @@ class PermissionsActivity : AppCompatActivity() {
         Log.e(TAG, "onCreate")
         setContentView(R.layout.permissions_activity)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            checkPermission();
+            checkPermission()
         }
-        btnPreferences.setOnClickListener {
+        btnAddLocation.setOnClickListener {
             val intent = Intent().apply {
-                action = android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
-                data = Uri.fromParts("package", packageName, null);
+                action = android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                data = Uri.fromParts("package", packageName, null)
             }
             startActivityForResult(intent, PREFERENCE_REQUEST_CODE)
-            btnPreferences.visibility = View.VISIBLE
+            btnAddLocation.visibility = View.VISIBLE
         }
         btnReintentar.setOnClickListener {
             checkPermission()
@@ -75,10 +75,10 @@ class PermissionsActivity : AppCompatActivity() {
                         goToMainActivity()
                     false ->
                         if (shouldShowRequestPermissionRationale( permissions.first() )) {
-                            btnPreferences.visibility = View.GONE
+                            btnAddLocation.visibility = View.GONE
                             Log.e(TAG, "Just Deny")
                         } else {
-                            btnPreferences.visibility = View.VISIBLE
+                            btnAddLocation.visibility = View.VISIBLE
                             Log.e(TAG, "Don't ask again selected")
                             Toast.makeText(this, "Don't ask again selected", Toast.LENGTH_SHORT).show()
                         }

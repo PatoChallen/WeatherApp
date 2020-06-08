@@ -1,158 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/toggle"
-    android:background="@color/cardActive"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <data>
+        <import type="com.patofernandez.weatherapp.vo.City" />
+        <import type="com.patofernandez.weatherapp.vo.CityDay" />
+        <import type="com.patofernandez.weatherapp.vo.Status" />
+        <import type="com.patofernandez.weatherapp.vo.Resource" />
+        <import type="androidx.lifecycle.LiveData" />
+        <variable
+            name="day"
+            type="CityDay" />
+        <variable
+            name="location"
+            type="City" />
+        <variable
+            name="result"
+            type="LiveData&lt;Resource&lt;City>>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/toggle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/guideline"
-        tools:context=".MainActivity" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imgLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/ic_location"
-        app:layout_constraintBottom_toBottomOf="@+id/city"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/city" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline"
+            tools:context=".MainActivity" />
 
-    <TextView
-        android:id="@+id/city"
-        style="@style/customText"
-        android:textSize="24sp"
-        android:layout_width="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Buenos Aires, AR"
-        android:textColor="@color/textColor"
-        app:layout_constraintEnd_toStartOf="@+id/imgDate"
-        app:layout_constraintStart_toEndOf="@+id/imgLocation"
-        app:layout_constraintTop_toBottomOf="@id/guideline" />
+        <ImageView
+            android:id="@+id/imgLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim10"
+            visibility="@{day != null}"
+            android:src="@drawable/ic_location"
+            app:layout_constraintBottom_toBottomOf="@+id/city"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/city"
+            tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/date"
-        style="@style/customText"
-        android:layout_marginEnd="8dp"
-        android:text="29/5/2020 2:03"
-        android:textColor="@color/textColor"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/city"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/city" />
+        <TextView
+            android:id="@+id/city"
+            style="@style/customText"
+            android:textSize="@dimen/text24"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/dim8"
+            android:layout_marginTop="@dimen/dim8"
+            android:text="@{location.city}"
+            app:layout_constraintEnd_toStartOf="@+id/imgDate"
+            app:layout_constraintStart_toEndOf="@+id/imgLocation"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            tools:text="Buenos Aires, AR" />
 
-    <ImageView
-        android:id="@+id/imgDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_date"
-        app:layout_constraintBottom_toBottomOf="@+id/date"
-        app:layout_constraintEnd_toStartOf="@id/date"
-        app:layout_constraintTop_toTopOf="@+id/date" />
+        <TextView
+            android:id="@+id/date"
+            style="@style/customText"
+            android:layout_marginEnd="@dimen/dim16"
+            android:text="@{day.date}"
+            android:textSize="@dimen/text16"
+            app:layout_constraintBottom_toBottomOf="@+id/city"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/city"
+            tools:text="29/5/2020 2:03" />
 
-    <TextView
-        android:id="@+id/temperature"
-        style="@style/customText"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/textColor"
-        android:fontFamily="sans-serif-condensed-light"
-        android:letterSpacing="-0.05"
-        android:text="18º"
-        android:textSize="60sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/city" />
+        <ImageView
+            android:id="@+id/imgDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dim8"
+            visibility="@{day != null}"
+            android:src="@drawable/ic_date"
+            app:layout_constraintBottom_toBottomOf="@+id/date"
+            app:layout_constraintEnd_toStartOf="@id/date"
+            app:layout_constraintTop_toTopOf="@+id/date"
+            tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/imgWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/clouds"
-        app:layout_constraintBottom_toBottomOf="@+id/temperature"
-        app:layout_constraintStart_toEndOf="@id/temperature"
-        app:layout_constraintTop_toTopOf="@+id/temperature" />
+        <TextView
+            android:id="@+id/temperature"
+            style="@style/customText"
+            android:layout_marginStart="@dimen/dim16"
+            android:fontFamily="sans-serif-condensed-light"
+            android:letterSpacing="-0.05"
+            android:text="@{day.hours.get(0).temp}"
+            android:textSize="@dimen/text60"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/city"
+            tools:text="18º" />
 
-    <TextView
-        android:id="@+id/humidity"
-        style="@style/customText"
-        android:layout_marginStart="6dp"
-        android:textColor="@color/textColor"
-        android:text="72%"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintBottom_toTopOf="@id/pressure"
-        app:layout_constraintStart_toEndOf="@+id/imgWeather"
-        app:layout_constraintTop_toTopOf="@+id/temperature" />
+        <ImageView
+            android:id="@+id/imgWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            imageUrl="@{day.hours.get(0).iconUrl}"
+            app:layout_constraintBottom_toBottomOf="@+id/temperature"
+            app:layout_constraintStart_toEndOf="@id/temperature"
+            app:layout_constraintTop_toTopOf="@+id/temperature"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/clouds" />
 
-    <TextView
-        android:id="@+id/pressure"
-        style="@style/customText"
-        android:layout_marginStart="6dp"
-        android:textColor="@color/textColor"
-        android:text="1012 hpa"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/imgWeather"
-        app:layout_constraintTop_toBottomOf="@+id/humidity"
-        app:layout_constraintBottom_toBottomOf="@id/temperature"/>
+        <TextView
+            android:id="@+id/humidity"
+            style="@style/customText"
+            android:layout_marginEnd="@dimen/dim16"
+            visibility="@{day != null}"
+            android:text="@{`Humedad ` + day.hours.get(0).humidity}"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@id/pressure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/temperature"
+            tools:text="72%" />
 
-    <TextView
-        android:id="@+id/sunrise"
-        style="@style/customText"
-        android:textColor="@color/textColor"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
-        android:visibility="gone"
-        android:text="09:50"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pressure" />
+        <TextView
+            android:id="@+id/pressure"
+            style="@style/customText"
+            android:layout_marginEnd="@dimen/dim16"
+            visibility="@{day != null}"
+            android:text="@{`Presión ` + day.hours.get(0).pressure}"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/humidity"
+            app:layout_constraintBottom_toBottomOf="@id/temperature"
+            tools:text="1012 hpa" />
 
-    <TextView
-        android:id="@+id/sunset"
-        style="@style/customText"
-        android:textColor="@color/textColor"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
-        android:visibility="gone"
-        android:text="00:21"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sunrise" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/weatherHours"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:listitem="@layout/weather_hour_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/customForecast"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperature" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/weathweHours"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:elevation="5dp"
-        tools:listitem="@layout/weather_hour_item"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/customForecast"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temperature" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/customForecast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/day_item"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <com.patofernandez.weatherapp.view.CustomWeatherForecastView
-        android:id="@+id/customForecast"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.30" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

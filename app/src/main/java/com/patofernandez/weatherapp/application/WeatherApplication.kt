@@ -1,18 +1,21 @@
 package com.patofernandez.weatherapp.application
 
+import android.app.Activity
 import android.app.Application
+import com.patofernandez.weatherapp.di.AppInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import javax.inject.Inject
 
-class WeatherApplication: Application() {
+class WeatherApplication: Application(), HasActivityInjector {
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
         super.onCreate()
-        weatherApplication = this
+        AppInjector.init(this)
     }
 
-    companion object {
-        private lateinit var weatherApplication: WeatherApplication
-        fun getInstance(): WeatherApplication {
-            return weatherApplication
-        }
-    }
+    override fun activityInjector() = dispatchingAndroidInjector
+
 }

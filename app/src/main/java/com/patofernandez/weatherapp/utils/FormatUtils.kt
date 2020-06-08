@@ -9,8 +9,11 @@ class FormatUtils {
         private const val KELVIN_CONSTANT = 273
         private const val REFRESH_TIME_IN_HOURS = 3
 
-        fun formatedKelvinToCelsius(temp: Double): String {
-            return (temp.toInt() - KELVIN_CONSTANT).toString().plus("º")
+        fun formatedKelvinToCelsius(temp: Double?): String? {
+            temp?.let {
+                return (temp.toInt() - KELVIN_CONSTANT).toString().plus("º")
+            }
+            return null
         }
 
         fun formatedTime(time: Long): String {
@@ -45,6 +48,12 @@ class FormatUtils {
                 this.add(Calendar.HOUR, REFRESH_TIME_IN_HOURS)
                 val endHour: String = DateFormat.format("HH:mm", this.time).toString()
                 return@with "$initHour - $endHour"
+            }
+        }
+
+        fun millisToCalendar(millis: Long): Calendar {
+            return Calendar.getInstance().apply {
+                timeInMillis = millis
             }
         }
 

@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.patofernandez.weatherapp.view.HomeFragment"
+        android:name="com.patofernandez.weatherapp.ui.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment" >
         <action
@@ -18,12 +18,12 @@
     </fragment>
     <fragment
         android:id="@+id/locationWeatherFragment"
-        android:name="com.patofernandez.weatherapp.view.LocationWeatherFragment"
+        android:name="com.patofernandez.weatherapp.ui.LocationWeatherFragment"
         android:label="LocationWeatherFragment"
         tools:layout="@layout/location_weather_fragment" />
     <fragment
         android:id="@+id/selectLocationFragment"
-        android:name="com.patofernandez.weatherapp.view.SelectLocationFragment"
+        android:name="com.patofernandez.weatherapp.ui.SelectLocationFragment"
         android:label="SelectLocationFragment"
         tools:layout="@layout/select_location_fragment" />
 </navigation>
