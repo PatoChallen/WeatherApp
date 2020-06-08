@@ -6,7 +6,7 @@
     <data>
         <variable
             name="selected"
-            type="Boolean" />
+            type="Integer" />
         <variable
             name="day"
             type="com.patofernandez.weatherapp.vo.CityDay" />
@@ -21,13 +21,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/pix1"
-            android:backgroundTint="@{selected ? @color/cardActive : @color/cardInactive}"
             app:cardPreventCornerOverlap="true"
+            app:background="@{selected}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:backgroundTint="@color/cardInactive">
+            app:layout_constraintTop_toTopOf="parent" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

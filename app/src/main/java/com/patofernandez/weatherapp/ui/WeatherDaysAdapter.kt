@@ -59,7 +59,7 @@ class WeatherDaysAdapter(
     }
 
     override fun bind(binding: DayItemBinding, item: CityDay) {
-        binding.selected = item == selectedItem
+        binding.selected = if (item == selectedItem) R.color.cardActive else R.color.cardInactive
         binding.day = item
     }
 

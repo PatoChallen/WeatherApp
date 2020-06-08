@@ -12,6 +12,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
         android:layout_margin="@dimen/dim1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +27,7 @@
                 android:padding="@dimen/dim5"
                 android:fontFamily="sans-serif-condensed-light"
                 android:textStyle="bold"
+                android:textColor="@color/textColor"
                 android:text="@{favoriteLocation.name}"
                 android:textSize="@dimen/text20"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dim10"
+                android:textColor="@color/textColor"
                 android:fontFamily="sans-serif-condensed-light"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/favTitle"
@@ -72,9 +75,11 @@
             <TextView
                 android:id="@+id/tempMax"
                 style="@style/customText"
-                android:layout_marginStart="@dimen/dim5"
+                android:layout_marginStart="@dimen/dim25"
                 android:textSize="@dimen/text15"
                 android:text="@{favoriteLocation.tempMax}"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintBottom_toTopOf="@id/tempMin"
                 app:layout_constraintStart_toEndOf="@+id/temp"
@@ -94,9 +99,10 @@
             <TextView
                 android:id="@+id/tempMin"
                 style="@style/customText"
-                android:layout_marginStart="@dimen/dim5"
+                android:layout_marginStart="@dimen/dim25"
                 android:textSize="@dimen/text15"
                 android:text="@{favoriteLocation.tempMin}"
+                android:fontFamily="sans-serif-condensed-light"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/temp"
                 app:layout_constraintTop_toBottomOf="@+id/tempMax"

@@ -19,15 +19,24 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/toggle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/afternoon"
+            android:alpha=".0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/myLocation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@android:color/transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -49,7 +58,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:text="Villa Urquiza" />/>
+                    tools:text="Villa Urquiza" />
 
                 <TextView
                     android:id="@+id/temp"

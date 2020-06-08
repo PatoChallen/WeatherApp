@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<MainActivityBinding>(this, R.layout.main_activity)
         binding.background = when(Calendar.getInstance()[Calendar.HOUR_OF_DAY]) {
-            in 7..17 -> R.color.colorPrimary
-            in 18..20 -> R.color.colorAccent
-            else -> R.color.colorPrimaryDark
+            in 7..17 -> R.color.day
+            in 18..20 -> R.color.afternoon
+            else -> R.color.night
         }
     }
 
