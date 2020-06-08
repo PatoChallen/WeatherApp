@@ -2,7 +2,7 @@
 
 Developed in **Android Studio** by **Patricio Fernandez Challen** 
 
-# Architecture
+## Architecture
 
 **- MVVM**
 
