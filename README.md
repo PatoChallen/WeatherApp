@@ -24,4 +24,5 @@ Developed in **Android Studio** by **Patricio Fernandez Challen**
  - [Retrofit](https://square.github.io/retrofit/)
  - [Dagger](https://github.com/google/dagger)
  - [Glide](https://github.com/bumptech/glide)
+ - [Open Weather API](https://openweathermap.org/api)
  - [Google Maps API](https://developers.google.com/maps/documentation/android-sdk/intro)
